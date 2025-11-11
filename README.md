@@ -144,7 +144,7 @@ Found a bug or have a feature request? Contributions are welcome!
 
 ## 📜 License
 
-This project is open source and available under the [MIT License](LICENSE).
+This project is open source and available under the [GPLv3.0 License](LICENSE).
 
 ---
 
