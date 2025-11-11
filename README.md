@@ -1,2 +1,2 @@
 # HurlVim
-Nvorg the Dream &amp; Heaven of Lazy Devlopers.
+Hurl Vim a Place for Lazy Devlopers.
