@@ -40,7 +40,7 @@ mkdir -p ~/.config/rv
 cd ~/.config/rv
 
 # Clone NvRush
-git clone https://github.com/HornTur/NvRush.git ~/.config/rv
+git clone https://github.com/NvRush/NvRush.git ~/.config/rv
 
 # Launch NvRush for the first time
 NVIM_APPNAME=rv nvim
