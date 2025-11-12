@@ -1,4 +1,3 @@
-
 # 🚀 NvRush
 > [!Important]
 > **A paradise for lazy developers** — Experience the power of a blazing-fast, offline IDE with the elegance of Vim/Neovim. All the features you love, none of the bloat.
@@ -6,21 +5,26 @@
 <div align="center">
 <img width="800" height="800" alt="NvRush's Logo" src="https://github.com/user-attachments/assets/b96db7fd-6aa8-47e7-a360-71f3b1152ac7" />
 </div>
+
 ---
 
 ## ✨ Why NvRush?
 
-HurlVim delivers the perfect balance between functionality and minimalism:
+NvRush delivers the perfect balance between functionality and minimalism:
 
 - ⚡ **Blazing Fast** — Lightning-quick startup and response times
+- 🪶 **Featherweight** — Only ~6MB, incredibly light on resources
+- 🎯 **Efficient Like IDEs** — Modern features without the heavyweight baggage
+- ✏️ **Fully Integrated Editing** — Seamless workflow from start to finish
+- 🔄 **Workflow Made Easy** — Optimized keybindings and smart defaults
 - 🎨 **Beautiful Themes** — Eye-catching UI powered by Lua
-- 📦 **Minimal Footprint** — Only ~6MB, yet feature-complete
-- 🔌 **Offline First** — No internet required, complete privacy
-- 🎯 **IDE-like Experience** — All the modern features without the weight
-- 🛠️ **Pre-configured** — Ready to use out of the box
+- 🔌 **Offline First** — No internet required, complete privacy guaranteed
+- 🛠️ **Pre-configured** — Ready to use out of the box, zero hassle
+- 🧠 **Smart & Intuitive** — Learn once, productive forever
+- 🔧 **Highly Customizable** — Bend it to your will with simple Lua configs
 
 > [!IMPORTANT]
-> HurlVim is 1000x better than bloated online editors while maintaining the soul of Vim/Neovim.
+> NvRush is 1000x better than bloated online editors while maintaining the soul of Vim/Neovim.
 
 ---
 
@@ -30,33 +34,30 @@ HurlVim delivers the perfect balance between functionality and minimalism:
 
 ```bash
 # Create your custom config directory
-mkdir -p ~/.config/hv
+mkdir -p ~/.config/rv
 
 # Navigate to the directory
-cd ~/.config/hv
+cd ~/.config/rv
 
-# Clone HurlVim
-git clone https://github.com/HornTur/HurlVim.git ~/.config/hv
+# Clone NvRush
+git clone https://github.com/HornTur/NvRush.git ~/.config/rv
 
-# Launch HurlVim for the first time
-NVIM_APPNAME=hv nvim
+# Launch NvRush for the first time
+NVIM_APPNAME=rv nvim
 
-# Optional add to zshrc or bashrc and after that source it 
-# alias hv='NVIM_APPNAME=hv nvim'
-
-
-
+# Optional: add to zshrc or bashrc and then source it 
+# alias rv='NVIM_APPNAME=rv nvim'
 ```
 
 > [!NOTE]
-> Replace `hv` with your preferred directory/launcher name (e.g., `hurlvim`, `hv`, or `mynvim`).
+> Replace `rv` with your preferred directory/launcher name (e.g., `nvrush`, `rv`, or `mynvim`).
 
 ### Setting Up an Alias (Optional but Recommended)
 
 Add this to your shell configuration file (`~/.bashrc`, `~/.zshrc`, etc.):
 
 ```bash
-alias hv='NVIM_APPNAME=hv nvim'
+alias rv='NVIM_APPNAME=rv nvim'
 ```
 
 Then reload your shell:
@@ -65,7 +66,7 @@ Then reload your shell:
 source ~/.bashrc  # or ~/.zshrc for Zsh users
 ```
 
-[!NOTE]
+> [!NOTE]
 > After the first launch, plugins will install automatically. This may take a minute — be patient and let the magic happen! ✨
 
 ---
@@ -74,24 +75,24 @@ source ~/.bashrc  # or ~/.zshrc for Zsh users
 
 ### First Launch
 
-1. **Initial Setup** — Run `hv` (or your custom alias) for the first time
+1. **Initial Setup** — Run `rv` (or your custom alias) for the first time
 2. **Plugin Installation** — Wait for automatic plugin installation to complete
 3. **Ready to Code** — Start editing with your new supercharged setup!
 
 > [!IMPORTANT]
-> The `NVIM_APPNAME` environment variable ensures HurlVim runs independently from your main Neovim configuration. This means you can test HurlVim without affecting your existing setup!
+> The `NVIM_APPNAME` environment variable ensures NvRush runs independently from your main Neovim configuration. This means you can test NvRush without affecting your existing setup!
 
 ### Launch Commands
 
 ```bash
 # Using the full command
-NVIM_APPNAME=hv nvim
+NVIM_APPNAME=rv nvim
 
 # Using your alias (if configured)
-hv
+rv
 
 # Open a specific file
-hv myfile.lua
+rv myfile.lua
 ```
 
 ---
@@ -100,20 +101,36 @@ hv myfile.lua
 
 ### What You Get
 
-- **Smart Autocompletion** — Intelligent code suggestions
-- **Syntax Highlighting** — Beautiful, accurate code coloring
-- **File Explorer** — Intuitive file navigation
-- **Fuzzy Finding** — Lightning-fast file and text search
-- **Git Integration** — Seamless version control
-- **LSP Support** — Full language server protocol integration
-- **Terminal Integration** — Built-in terminal access
-- **Custom Keybindings** — Optimized for productivity
+- **Smart Autocompletion** — Intelligent code suggestions powered by advanced engines
+- **Syntax Highlighting** — Beautiful, accurate code coloring with Treesitter
+- **File Explorer** — Intuitive file navigation with visual indicators
+- **Fuzzy Finding** — Lightning-fast file and text search across your entire project
+- **Git Integration** — Seamless version control with visual diff and blame
+- **LSP Support** — Full language server protocol integration for multiple languages
+- **Terminal Integration** — Built-in terminal access without leaving your editor
+- **Custom Keybindings** — Optimized for productivity and muscle memory
+- **Snippet Support** — Quick code templates for common patterns
+- **Diagnostic Display** — Inline error and warning messages
+- **Auto-formatting** — Keep your code clean with automatic formatting
+- **Split Windows** — Work on multiple files simultaneously with ease
 
 ### Performance
 
-- **Startup Time** — Launches in milliseconds
-- **Memory Usage** — Incredibly lightweight
-- **Responsive** — Smooth editing even with large files
+- **Startup Time** — Launches in milliseconds, not seconds
+- **Memory Usage** — Incredibly lightweight, runs smoothly even on modest hardware
+- **Responsive** — Smooth editing even with large files and complex projects
+- **Battery Friendly** — Efficient resource usage extends laptop battery life
+
+---
+
+## 🎯 Perfect For
+
+- **Minimalists** — Who want power without complexity
+- **Speed Demons** — Who demand instant response times
+- **Privacy Advocates** — Who prefer offline-first solutions
+- **Vim Enthusiasts** — Who love modal editing and efficiency
+- **Resource-Conscious Devs** — Working on older or lower-spec machines
+- **Terminal Lovers** — Who live in the command line
 
 ---
 
@@ -149,12 +166,13 @@ This project is open source and available under the [GPLv3.0 License](LICENSE).
 
 ## 🌟 Support
 
-If HurlVim makes your development life easier, consider:
+If NvRush makes your development life easier, consider:
 
 - ⭐ **Starring** the repository
 - 🐛 **Reporting** bugs and issues
 - 💡 **Suggesting** new features
 - 📢 **Sharing** with fellow developers
+- 💬 **Joining** discussions and helping others
 
 ---
 
