@@ -31,7 +31,7 @@ require("dressing").setup({
     buf_options = {},
     win_options = {
       -- Disable line wrapping
-      wrap = false,
+      wrap = true,
       -- Indicator for when text exceeds window
       list = true,
       listchars = "precedes:…,extends:…",
@@ -175,30 +175,3 @@ vim.api.nvim_set_hl(0, "DressingSelectBorder", { bg = "#3c3836", fg = "#fe8019" 
 
 -- Make sure prompt text is neutral color, not red
 vim.api.nvim_set_hl(0, "DressingInputPrompt", { fg = "#ebdbb2" })  -- text inside prompt
-
--- ~/.config/nvim/lua/user/UI/dressing_keymaps.lua
-local opts = { noremap = true, silent = true }
-
--- Input prompt (floating)
-vim.api.nvim_set_keymap(
-  "n",
-  "<leader>di",  -- "dressing input"
-  ":lua vim.ui.input({ prompt = 'Enter something: ' }, function(input) print('You typed:', input) end)<CR>",
-  opts
-)
-
--- Selection menu (floating)
-vim.api.nvim_set_keymap(
-  "n",
-  "<leader>ds",  -- "dressing select"
-  ":lua vim.ui.select({'Option 1', 'Option 2', 'Option 3'}, { prompt = 'Pick an option:' }, function(choice) print('You chose:', choice) end)<CR>",
-  opts
-)
-
--- Combined demo: input + select
-vim.api.nvim_set_keymap(
-  "n",
-  "<leader>dd",  -- "dressing demo"
-  ":lua vim.ui.input({ prompt = 'Enter value: ' }, function(val) vim.ui.select({'A', 'B', 'C'}, { prompt = 'Pick one:' }, function(choice) print('Input:', val, 'Choice:', choice) end) end)<CR>",
-  opts
-)
