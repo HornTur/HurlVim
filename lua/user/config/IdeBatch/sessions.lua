@@ -61,7 +61,7 @@ local function show_session_info()
         return
     end
     
-    local lines = { "📂 Available Sessions:", "" }
+    local lines = { " Available Sessions:", "" }
     for _, session in ipairs(session_data) do
         table.insert(lines, "  " .. session.display)
     end
@@ -252,7 +252,7 @@ vim.api.nvim_create_autocmd("VimLeavePre", {
 vim.keymap.set("n", "<leader>ss", function()
     local default_name = M.current_session or vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
     vim.ui.input({ 
-        prompt = "💾 Session name: ", 
+        prompt = " Session name: ", 
         default = default_name 
     }, function(name)
         if name and name ~= "" then
@@ -271,7 +271,6 @@ vim.keymap.set("n", "<leader>sl", function()
         vim.notify("No sessions available", vim.log.levels.WARN)
         return
     end
-    
     local target = M.last_session or sessions[1] or vim.fn.getcwd()
     M.last_session = M.current_session
     M.current_session = target
@@ -287,7 +286,6 @@ vim.keymap.set("n", "<leader>sf", function()
         vim.notify("No sessions available", vim.log.levels.WARN)
         return
     end
-    
     show_picker({
         session_data = session_data,
         title = "📂 Load Session",
@@ -303,12 +301,10 @@ end, { desc = "Session: Pick & Load" })
 -- Delete session with picker
 vim.keymap.set("n", "<leader>sd", function()
     local session_data = get_session_info()
-    
     if #session_data == 0 then
         vim.notify("No sessions to delete", vim.log.levels.WARN)
         return
     end
-    
     show_picker({
         session_data = session_data,
         title = "🗑️  Delete Session",
@@ -333,65 +329,6 @@ end, { desc = "Session: Delete" })
 
 -- Show session info window
 vim.keymap.set("n", "<leader>si", show_session_info, { desc = "Session: Info" })
-
--- List all sessions (command)
-vim.keymap.set("n", "<leader>sL", function()
-    local sessions = resession.list()
-    if #sessions == 0 then
-        vim.notify("No sessions found", vim.log.levels.INFO)
-    else
-        local msg = "Available sessions (" .. #sessions .. "):\n  • " .. table.concat(sessions, "\n  • ")
-        if M.current_session then
-            msg = msg .. "\n\nCurrent: " .. M.current_session
-        end
-        vim.notify(msg, vim.log.levels.INFO)
-    end
-end, { desc = "Session: List all" })
-
--- Switch between sessions quickly
-vim.keymap.set("n", "<leader>sn", function()
-    local sessions = resession.list()
-    if #sessions == 0 then 
-        vim.notify("No sessions available", vim.log.levels.WARN)
-        return 
-    end
-    
-    local current_idx = 1
-    for i, name in ipairs(sessions) do
-        if name == M.current_session then
-            current_idx = i
-            break
-        end
-    end
-    
-    local next_idx = (current_idx % #sessions) + 1
-    M.last_session = M.current_session
-    M.current_session = sessions[next_idx]
-    resession.load(sessions[next_idx])
-    vim.notify("→ " .. sessions[next_idx], vim.log.levels.INFO)
-end, { desc = "Session: Next" })
-
-vim.keymap.set("n", "<leader>sp", function()
-    local sessions = resession.list()
-    if #sessions == 0 then 
-        vim.notify("No sessions available", vim.log.levels.WARN)
-        return 
-    end
-    
-    local current_idx = 1
-    for i, name in ipairs(sessions) do
-        if name == M.current_session then
-            current_idx = i
-            break
-        end
-    end
-    
-    local prev_idx = current_idx == 1 and #sessions or current_idx - 1
-    M.last_session = M.current_session
-    M.current_session = sessions[prev_idx]
-    resession.load(sessions[prev_idx])
-    vim.notify("← " .. sessions[prev_idx], vim.log.levels.INFO)
-end, { desc = "Session: Previous" })
 
 -- User command for session management
 vim.api.nvim_create_user_command("SessionInfo", show_session_info, {})
