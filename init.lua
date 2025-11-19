@@ -75,6 +75,7 @@ safe_require("user.config.IdeBatch.whkey")
 safe_require("user.config.IdeBatch.multiselect")
 safe_require("user.config.IdeBatch.treesitter")
 safe_require("user.config.IdeBatch.showkey")
+safe_require("user.config.IdeBatch.surround")
 safe_require("user.config.LspBatch.luasnip")
 
 -- ============= ============= ============= ============= 
