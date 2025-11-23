@@ -1,11 +1,3 @@
-require('mini.surround').setup({
-    mappings = {
-        add = "msa",
-        delete = "msd",
-        replace = "msr",
-        find = "msff",
-        find_left = "msfl",
-        highlight = "msh",
-        update_n_lines = "msn"
-    },
-})
+-- Uncomment only if you had changed the reserved leader mappings as Mini surround does use many leaders mappings that already exists in NvRush so do Uncomment at your own risk
+-- require('mini.surround').setup({
+-- })

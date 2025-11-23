@@ -1,231 +1,121 @@
--- snacks.nvim configuration for fast, bottom-left notifications
--- with beautiful picker using current active theme
+local snacks = require('snacks')
 
-require("snacks").setup({
+-- Setup Snacks with beautiful notifications
+snacks.setup({
+    -- Enable notification system
     notifier = {
         enabled = true,
-        timeout = 3000,                              -- 3 seconds display time
-        width = { min = 40, max = 0.4 },             -- max 40% of screen width
-        height = { min = 1, max = 0.6 },             -- max 60% of screen height
-        margin = { top = 0, right = 1, bottom = 0 }, -- position margins
-        padding = 1,
+        timeout = 3000, -- 3 seconds default display
+        width = { min = 40, max = 0.4 },
+        height = { min = 1, max = 0.6 },
+        margin = { top = 0, right = 1, bottom = 0 },
+        padding = true,
         sort = { "level", "added" },
 
-        -- Position: bottom-left corner
+        -- Show notifications with rounded borders
         style = "compact",
-        top_down = false, -- stack from bottom up
+        top_down = true,
 
-        -- Window options for the notification buffer
-        win = {
-            relative = "editor",
-            position = "bottom",
-            anchor = "SW", -- South-West (bottom-left)
-            width = 60,
-            height = 1,
-            row = -2, -- 2 lines from bottom
-            col = 0,  -- left edge
-            border = "rounded",
+        -- CRITICAL: Show ALL levels including DEBUG and TRACE
+        filter = function(notif)
+            return true -- Show everything, no filtering
+        end,
 
-            -- Enable line wrapping
-            wo = {
-                wrap = true,
-                linebreak = true,
-                breakindent = true,
-                showbreak = "↪ ",
-            },
-
-            -- Use current theme colors dynamically
-            style = function()
-                local normal = vim.api.nvim_get_hl(0, { name = "Normal" })
-                local float = vim.api.nvim_get_hl(0, { name = "NormalFloat" })
-                local border = vim.api.nvim_get_hl(0, { name = "FloatBorder" })
-
-                return {
-                    bg = float.bg or normal.bg,
-                    fg = float.fg or normal.fg,
-                    border_fg = border.fg,
-                    border_bg = float.bg or normal.bg,
-                }
-            end,
+        -- Icons for different severity levels
+        icons = {
+            error = "●",
+            warn = "●",
+            info = "●",
+            debug = "●",
+            trace = "●",
         },
 
-        -- No animations for instant display
-        stages = {
-            {
-                timeout = 0,
-                hl = function()
-                    local normal = vim.api.nvim_get_hl(0, { name = "Normal" })
-                    return { bg = normal.bg, fg = normal.fg }
-                end,
-            },
-        },
-
-        -- Level-specific highlighting using theme colors
+        -- Level styles
         level = {
-            trace = {
-                hl = function()
-                    local comment = vim.api.nvim_get_hl(0, { name = "Comment" })
-                    return { fg = comment.fg }
-                end,
-                icon = "●",
-            },
-            debug = {
-                hl = function()
-                    local special = vim.api.nvim_get_hl(0, { name = "Special" })
-                    return { fg = special.fg }
-                end,
-                icon = "◆",
-            },
-            info = {
-                hl = function()
-                    local info = vim.api.nvim_get_hl(0, { name = "DiagnosticInfo" })
-                    return { fg = info.fg }
-                end,
-                icon = "●",
-            },
-            warn = {
-                hl = function()
-                    local warn = vim.api.nvim_get_hl(0, { name = "DiagnosticWarn" })
-                    return { fg = warn.fg }
-                end,
-                icon = "▲",
-            },
-            error = {
-                hl = function()
-                    local error = vim.api.nvim_get_hl(0, { name = "DiagnosticError" })
-                    return { fg = error.fg }
-                end,
-                icon = "✖",
-            },
-        },
-
-        -- Icons configuration
-        icons = {
-            enabled = true,
+            error = { hl = "DiagnosticError" },
+            warn = { hl = "DiagnosticWarn" },
+            info = { hl = "DiagnosticInfo" },
+            debug = { hl = "DiagnosticHint" },
+            trace = { hl = "DiagnosticHint" },
         },
     },
 
-    -- Beautiful Picker Configuration
-    picker = {
-        enabled = false,
-
-        -- Layout configuration
-        layout = {
-            preset = "telescope", -- bottom-up layout (also try: "default", "telescope")
-            width = 0.8,          -- 80% of screen width
-            height = 0.6,         -- 60% of screen height
-            border = "rounded",
-            backdrop = 60,        -- backdrop transparency (0-100)
-
-            -- Position in center-bottom
-            position = "bottom",
-            row = 0.9, -- near bottom
-        },
-
-        -- Window style using theme colors
-        win = {
-            input = {
-                border = "rounded",
-                title_pos = "center",
-                style = function()
-                    local normal = vim.api.nvim_get_hl(0, { name = "Normal" })
-                    local float = vim.api.nvim_get_hl(0, { name = "NormalFloat" })
-                    local border = vim.api.nvim_get_hl(0, { name = "FloatBorder" })
-                    local title = vim.api.nvim_get_hl(0, { name = "FloatTitle" })
-
-                    return {
-                        bg = float.bg or normal.bg,
-                        fg = float.fg or normal.fg,
-                        border_fg = border.fg,
-                        title_fg = title.fg or border.fg,
-                    }
-                end,
-            },
-            list = {
-                border = "rounded",
-                style = function()
-                    local normal = vim.api.nvim_get_hl(0, { name = "Normal" })
-                    local float = vim.api.nvim_get_hl(0, { name = "NormalFloat" })
-                    local border = vim.api.nvim_get_hl(0, { name = "FloatBorder" })
-
-                    return {
-                        bg = float.bg or normal.bg,
-                        fg = float.fg or normal.fg,
-                        border_fg = border.fg,
-                    }
-                end,
-            },
-        },
-
-        -- Formatting and icons
-        formatters = {
-            file = {
-                filename_first = true, -- show filename before path
-                -- Icons using theme highlight groups
-                format = function(item)
-                    local path = item.text
-                    local icon = item.icon or ""
-                    return string.format("%s %s", icon, path)
-                end,
-            },
-        },
-
-        -- Preview window configuration
-        preview = {
-            enabled = true,
-            border = "rounded",
-            style = function()
-                local normal = vim.api.nvim_get_hl(0, { name = "Normal" })
-                local float = vim.api.nvim_get_hl(0, { name = "NormalFloat" })
-                local border = vim.api.nvim_get_hl(0, { name = "FloatBorder" })
-
-                return {
-                    bg = float.bg or normal.bg,
-                    fg = float.fg or normal.fg,
-                    border_fg = border.fg,
-                }
-            end,
-        },
-
-        -- Icons configuration
-        icons = {
-            enabled = true,
-        },
-
-        -- Matcher configuration for fuzzy finding
-        matcher = {
-            frecency = true, -- enable frecency sorting
-            filename_first = true,
-        },
-
-        -- Sources configuration with icons
-        sources = {
-            files = {
-                hidden = false, -- don't show hidden files by default
-                follow = true,  -- follow symlinks
-            },
-            grep = {
-                hidden = false,
-            },
-        },
-    },
-
-    -- Custom highlight groups that inherit from theme
-    styles = {
-        notification = {
-            wo = { wrap = true, linebreak = true },
-        },
-
-    },
+    -- Other snacks features (optional)
+    bigfile = { enabled = true },
+    quickfile = { enabled = true },
+    statuscolumn = { enabled = false },
+    words = { enabled = true },
 })
 
--- Override vim.notify to use snacks
+-- Override vim.notify to use Snacks and show ALL messages
 vim.notify = function(msg, level, opts)
-    return require("snacks").notifier.notify(msg, level, opts)
+    -- Ensure TRACE level exists (might not in older Neovim)
+    if not vim.log.levels.TRACE then
+        vim.log.levels.TRACE = 0
+    end
+
+    -- Default to INFO if level is nil
+    level = level or vim.log.levels.INFO
+
+    -- Call Snacks notifier
+    return snacks.notifier.notify(msg, level, opts)
 end
 
+-- Configure to show ALL severity levels (including DEBUG and TRACE)
+vim.lsp.handlers["window/showMessage"] = function(_, result, ctx)
+    local client_name = "Unknown"
+    if vim.lsp.get_client_by_id then
+        local client = vim.lsp.get_client_by_id(ctx.client_id)
+        if client then
+            client_name = client.name
+        end
+    end
 
--- Example usage:
--- :lua require("snacks").picker.files()
--- :lua require("snacks").picker.grep()
--- Or use the keymaps defined above
+    -- Map LSP message types to vim log levels
+    local level_map = {
+        [1] = vim.log.levels.ERROR,
+        [2] = vim.log.levels.WARN,
+        [3] = vim.log.levels.INFO,
+        [4] = vim.log.levels.DEBUG,
+    }
+
+    local level = level_map[result.type] or vim.log.levels.INFO
+
+    snacks.notifier.notify(result.message, level, {
+        title = "LSP | " .. client_name,
+    })
+end
+
+-- Also capture LSP progress messages
+vim.lsp.handlers["$/progress"] = function(_, result, ctx)
+    local client_name = "Unknown"
+    if vim.lsp.get_client_by_id then
+        local client = vim.lsp.get_client_by_id(ctx.client_id)
+        if client then
+            client_name = client.name
+        end
+    end
+
+    local value = result.value
+    if value and value.kind then
+        local message = value.message or value.title or ""
+        if value.kind == "end" then
+            snacks.notifier.notify(message, vim.log.levels.INFO, {
+                title = "LSP | " .. client_name,
+            })
+        end
+    end
+end
+
+-- Useful keybindings
+vim.keymap.set('n', '<leader>nh', function()
+    snacks.notifier.show_history()
+end, { desc = 'Show notification history' })
+
+vim.keymap.set('n', '<leader>nc', function()
+    snacks.notifier.hide()
+end, { desc = 'Hide notifications' })
+
+vim.keymap.set('n', '<leader>un', function()
+    snacks.notifier.hide()
+end, { desc = 'Dismiss all notifications' })

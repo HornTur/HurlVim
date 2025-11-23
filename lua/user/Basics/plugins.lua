@@ -36,8 +36,7 @@ require("lazy").setup({
         { "chriskempson/vim-tomorrow-theme" },
 
         -- UI
-        { "lewis6991/gitsigns.nvim",             event = { "BufReadPre", "BufNewFile" } },
-        { "lukas-reineke/indent-blankline.nvim", main = "ibl",                          event = { "BufReadPost", "BufNewFile" } },
+        { "lukas-reineke/indent-blankline.nvim", main = "ibl",       event = { "BufReadPost", "BufNewFile" } },
         {
             "akinsho/bufferline.nvim",
             version = "*",
@@ -447,8 +446,7 @@ require("lazy").setup({
             {
                 "echasnovski/mini.nvim",
                 version = "*",
-            }
-
+            },
 
 
             -- ==============================================================

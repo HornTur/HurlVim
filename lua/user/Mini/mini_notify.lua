@@ -1,47 +1,80 @@
--- Disable animations
-vim.g.mininotify_disable = false
+-- IMPORTANT: Make sure nvim-notify is NOT loaded or configured!
+-- Comment out or remove any require("notify").setup() calls
 
-require('mini.notify').setup({
+local mini_notify = require('mini.notify')
+
+mini_notify.setup({
+    content = {
+        format = nil,
+        sort = nil,
+    },
+
+    lsp_progress = {
+        enable = true,
+        duration_last = 1000,
+    },
+
     window = {
         config = {
             border = "rounded",
-            row = 0,
-            col = 0,
-            -- Use anchor to position notifications:
-            -- "NW" = top-left (row 0, col 0)
-            -- "NE" = top-right (row 0, col vim.o.columns)
-            -- "SW" = bottom-left (row vim.o.lines, col 0)
-            -- "SE" = bottom-right (row vim.o.lines, col vim.o.columns)
-            anchor = "SE",
+            anchor = "NE",
+            row = 1,
+            col = vim.o.columns,
+            focusable = false,
+            zindex = 100,
+            style = "minimal",
         },
+        winblend = 10,
+        max_width_share = 0.35,
+        max_height_share = 0.25,
     },
 })
 
-vim.notify = require('mini.notify').make_notify()
+-- Ensure TRACE level exists
+if not vim.log.levels.TRACE then
+    vim.log.levels.TRACE = 0
+end
 
--- Examples of different positions:
+-- Override vim.notify to show ALL levels with no throttling
+vim.notify = mini_notify.make_notify({
+    ERROR = { duration = 5000, hl_group = 'DiagnosticError' },
+    WARN  = { duration = 4000, hl_group = 'DiagnosticWarn' },
+    INFO  = { duration = 3000, hl_group = 'DiagnosticInfo' },
+    DEBUG = { duration = 3000, hl_group = 'DiagnosticHint' },
+    TRACE = { duration = 3000, hl_group = 'DiagnosticHint' },
+})
 
--- Top-right corner:
--- anchor = "NE", row = 0, col = vim.o.columns
+-- LSP message handler to show ALL messages
+vim.lsp.handlers["window/showMessage"] = function(_, result, ctx)
+    local client_name = "Unknown"
+    if vim.lsp.get_client_by_id then
+        local client = vim.lsp.get_client_by_id(ctx.client_id)
+        if client then
+            client_name = client.name
+        end
+    end
 
--- Bottom-left corner:
--- anchor = "SW", row = vim.o.lines, col = 0
+    local level_map = {
+        [1] = vim.log.levels.ERROR,
+        [2] = vim.log.levels.WARN,
+        [3] = vim.log.levels.INFO,
+        [4] = vim.log.levels.DEBUG,
+    }
 
--- Bottom-right corner:
--- anchor = "SE", row = vim.o.lines, col = vim.o.columns
+    local level = level_map[result.type] or vim.log.levels.INFO
 
--- Center of screen:
--- anchor = "NW", row = math.floor(vim.o.lines / 2), col = math.floor(vim.o.columns / 2)
+    vim.notify(string.format("[%s] %s", client_name, result.message), level)
+end
 
+-- Keybindings
+vim.keymap.set('n', '<leader>nh', function()
+    mini_notify.show_history()
+end, { desc = 'Show notification history' })
 
--- require('mini.notify').setup({
---     window = {
---         config = {
---             border = "none",
---             row = 0,
---             col = 0,
---         },
---     },
--- })
---
--- vim.notify = require('mini.notify').make_notify()
+vim.keymap.set('n', '<leader>nc', function()
+    mini_notify.clear()
+end, { desc = 'Clear all notifications' })
+
+vim.keymap.set('n', '<leader>nr', function()
+    mini_notify.refresh()
+end, { desc = 'Refresh notifications' })

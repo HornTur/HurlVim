@@ -43,7 +43,7 @@ safe_require("user.UI.gitsigns")
 safe_require("user.UI.statusline")
 safe_require("user.UI.dressing")
 safe_require("user.UI.windows")
-safe_require("user.UI.snacks")
+-- safe_require("user.UI.snacks") backup only for mini.notify
 safe_require("user.UI.bold_text")
 safe_require("user.Overridder.Caller")
 safe_require("user.Overridder.gruvbox_ts")
@@ -51,6 +51,14 @@ safe_require("user.UI.theme")
 safe_require("user.UI.colors")
 safe_require("user.UI.SetGlobalTheme")
 safe_require("user.UI.notify")
+
+-- ============= ============= ============= =============
+-- 6. Mini Ecosystem
+-- ============= ============= ============= =============
+safe_require("user.Mini.mini_surround")
+safe_require("user.Mini.mini_notify")
+
+
 -- ============= ============= ============= =============
 -- 3. BATCH PLUGIN CORE
 -- ============= ============= ============= =============
@@ -83,11 +91,6 @@ safe_require("user.config.LspBatch.luasnip")
 -- ============= ============= ============= =============
 safe_require("user.PluginExtensionConfiguration.overseer")
 
--- ============= ============= ============= =============
--- 6. Custom Cmp
--- ============= ============= ============= =============
-safe_require("user.Mini.mini_surround")
-safe_require("user.Mini.mini_notify")
 
 -- ============= ============= ============= =============
 -- 6. Custom Cmp
@@ -104,7 +107,6 @@ safe_require("user.Mini.mini_notify")
 -- ============= ============= ============= ============= =============
 
 -- safe_require("user.UI.dressing")
--- safe_require("user.UI.noice")
 -- safe_require("user.UI.windows")
 -- safe_require("user.UI.snacks")
 -- safe_require("user.UI.bold_text")
