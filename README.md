@@ -4,7 +4,7 @@
 <a href="https://dotfyle.com/nvrush/nvrush"><img src="https://dotfyle.com/nvrush/nvrush/badges/leaderkey?style=flat" /></a>
 <a href="https://dotfyle.com/nvrush/nvrush"><img src="https://dotfyle.com/nvrush/nvrush/badges/plugin-manager?style=flat" /></a>
 
-
+[![Dotfyle Stats](https://dotfyle.com/plugins/<nvrush>/<nvrush>/shield)](https://dotfyle.com/plugins/<nvrush>/<nvrush>)
 ## Install Instructions
 
  > Install requires Neovim 0.9+. Always review the code before installing a configuration.
