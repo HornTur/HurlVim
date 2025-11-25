@@ -18,9 +18,7 @@
 </p>
 
 
-![NvRush](https://github.com/user-attachments/assets/34c5e70c-ba4c-4852-843b-73a1d8a57398)
-
-
+https://github.com/user-attachments/assets/65301e67-8b47-4cf6-b998-cde671436aa7
 ![Screenshot_20251125_072755](https://github.com/user-attachments/assets/b0ad4069-4c9e-40f7-a000-423205d2420e)
 
 
