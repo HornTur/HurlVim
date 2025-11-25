@@ -456,6 +456,10 @@ require("lazy").setup({
             { "savq/melange-nvim",               name = "melange-warm-savq" },
             { "rmehri01/onenord.nvim",           name = "onenord-rmehri01" },
             { "olivercederborg/poimandres.nvim", name = "poimanders.nvim" },
+
+            { "AlexvZyl/nordic.nvim",            name = "nordic-Alexy" },
+            { "NvChad/nvim-base16.lua" }, -- Define yourself
+            { "luisiacc/gruvbox-baby",           name = "gruvbox-baby" },
             -- ==============================================================
             -- Configuration for Lazy nvim Keep Plugins above this Comment !
             -- ==============================================================

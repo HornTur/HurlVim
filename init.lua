@@ -21,7 +21,7 @@ end
 -- ============= ============= ============= =============
 -- 1. BASIC SETTINGS CORE
 -- ============= ============= ============= =============
-
+safe_require("user.UI.NoMoreItalics")
 safe_require("user.Basics.env")
 safe_require("user.Basics.options")
 safe_require("user.Basics.mappings")
@@ -117,7 +117,19 @@ safe_require("user.PluginExtensionConfiguration.overseer")
 -- safe_require("user.UI.SetGlobalTheme")
 
 -- ============= ============= ============= ============= =============
--- KEEP EVERY FILE CALLL BEHIND THIS !!!
+-- Colorscheme Calls Only
 -- ============= ============= ============= ============= =============
 
-vim.cmd.colorscheme("poimandres")
+-- Uncomment this to use gruvbox
+-- vim.cmd.colorscheme("onenord")
+
+-- Comment this if you don't like
+vim.g.gruvbox_material_background = "hard"     -- options: soft | medium | hard
+vim.g.gruvbox_material_foreground = "material" -- options: material | mix | original
+vim.g.gruvbox_material_enable_bold = 1
+vim.g.gruvbox_material_enable_italic = 1
+vim.g.gruvbox_material_ui_contrast = "low"        -- options: low | high
+vim.g.gruvbox_material_transparent_background = 0 -- set to 1 for transparent
+
+-- Finally, load the colorscheme
+vim.cmd.colorscheme("onenord")
