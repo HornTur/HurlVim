@@ -16,7 +16,11 @@
   <img src="https://img.shields.io/badge/License-MIT-89b4fa?style=flat-square" alt="License">
   <img src="https://img.shields.io/github/stars/nvrush/nvrush?style=flat-square&color=f9e2af&logo=github&logoColor=white" alt="Stars">
 </p>
+<div align="center">
 
+https://github.com/user-attachments/assets/65301e67-8b47-4cf6-b998-cde671436aa7
+
+</div>
 
 https://github.com/user-attachments/assets/65301e67-8b47-4cf6-b998-cde671436aa7
 ![Screenshot_20251125_072755](https://github.com/user-attachments/assets/b0ad4069-4c9e-40f7-a000-423205d2420e)
