@@ -26,14 +26,6 @@ https://github.com/user-attachments/assets/65301e67-8b47-4cf6-b998-cde671436aa7
 ![Screenshot_20251125_072755](https://github.com/user-attachments/assets/b0ad4069-4c9e-40f7-a000-423205d2420e)
 
 
-[![Dotfyle Stats](https://dotfyle.com/plugins/<nvrush>/<nvrush>/shield)](https://dotfyle.com/plugins/<nvrush>/<nvrush>)
-
-
-
-
-
-
-
 ## Install Instructions
 
  > Install requires Neovim 0.9+. Always review the code before installing a configuration.
