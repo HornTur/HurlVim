@@ -23,12 +23,11 @@
 <div align="center">
 
 <video controls autoplay muted loop style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-  <source src="https://raw.githubusercontent.com/username/repo/main/assets/NvRush_Comp.mp4" type="NvRush_Comp/mp4">
+  <source src="https://raw.githubusercontent.com/NvRush/NvRush/main/assets/NvRush_Comp.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
 </div>
-
 
 ![Screenshot_20251125_072755](https://github.com/user-attachments/assets/b0ad4069-4c9e-40f7-a000-423205d2420e)
 
