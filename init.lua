@@ -64,7 +64,8 @@ safe_require("user.Mini.mini_notify")
 -- ============= ============= ============= =============
 
 safe_require("user.config.LspBatch.lsp")
-safe_require("user.config.LspBatch.cmp")
+-- safe_require("user.config.LspBatch.cmp")
+safe_require("user.config.LspBatch.blinkCmp")
 safe_require("user.config.LspBatch.autopairs")
 safe_require("user.config.LspBatch.formatter")
 

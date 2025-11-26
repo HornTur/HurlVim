@@ -23,29 +23,33 @@ local function on_attach(_, bufnr)
     map("n", "<leader>ca", vim.lsp.buf.code_action, opts)
     map("n", "<leader>f_", function() vim.lsp.buf.format { async = true } end, opts)
 end
-local cmp = require("cmp")
-
-cmp.setup({
-    window = {
-        documentation = cmp.config.disable, -- disables the side floating doc box
-    },
-    mapping = cmp.mapping.preset.insert({
-        ["<CR>"] = cmp.mapping.confirm({ select = true }),
-    }),
-    sources = cmp.config.sources({
-        { name = "nvim_lsp" },
-        { name = "buffer" },
-        { name = "path" },
-    })
-})
+-- NOTE: Uncomment only when you have to use nvim cmp instead of blink cmp engine.
+-- local cmp = require("cmp")
+--
+-- cmp.setup({
+--     window = {
+--         documentation = cmp.config.disable, -- disables the side floating doc box
+--     },
+--     mapping = cmp.mapping.preset.insert({
+--         ["<CR>"] = cmp.mapping.confirm({ select = true }),
+--     }),
+--     sources = cmp.config.sources({
+--         { name = "nvim_lsp" },
+--         { name = "buffer" },
+--         { name = "path" },
+--     })
+-- })
 -- ===============================
 -- 2. Capabilities (for cmp-nvim-lsp)
 -- ===============================
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-pcall(function()
-    capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-end)
+-- uncomment for nvim-cmp
+-- pcall(function()
+--     capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+-- end)
 
+-- default is blink.cmp
+capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
 -- ===============================
 -- 3. Default config
 -- ===============================

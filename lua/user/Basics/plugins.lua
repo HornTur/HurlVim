@@ -468,7 +468,19 @@ require("lazy").setup({
             -- ==============================================================
             -- All motion plugins here! :
             -- ==============================================================
-            { "otavioschwanck/arrow.nvim", }
+            { "otavioschwanck/arrow.nvim", },
+
+            -- ==============================================================
+            -- Lsp Plugins only ! :
+            -- ==============================================================
+            {
+                "saghen/blink.cmp",
+                version = "*", -- or omit to track latest
+                dependencies = {
+                    "L3MON4D3/LuaSnip",
+                    "rafamadriz/friendly-snippets",
+                },
+            },
             -- ==============================================================
             -- Configuration for Lazy nvim Keep Plugins above this Comment !
             -- ==============================================================
