@@ -230,6 +230,7 @@ local servers = {
         },
     },
     phpactor      = { cmd = { "phpactor", "language-server" }, filetypes = { "php" } },
+    zls           = { cmd = { "zls" }, filetypes = { "zig" } },
 
     -- ===============================
     -- NOTE: Better to write your configs behind this Note!

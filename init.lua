@@ -83,6 +83,8 @@ safe_require("user.config.IdeBatch.multiselect")
 safe_require("user.config.IdeBatch.treesitter")
 safe_require("user.config.IdeBatch.showkey")
 safe_require("user.config.IdeBatch.surround")
+safe_require("user.config.IdeBatch.arrow")
+
 safe_require("user.config.IdeBatch.oil")
 safe_require("user.config.LspBatch.luasnip")
 

@@ -22,21 +22,9 @@ require("lazy").setup({
         { "nvim-lua/plenary.nvim",               lazy = true },
         { "nvim-tree/nvim-web-devicons",         lazy = true },
 
-        -- themes (lots of great defaults)
-        { "ellisonleao/gruvbox.nvim",            priority = 1000 },
-        --{ "projekt0n/github-nvim-theme",         name = "github-theme",                 priority = 999 },
-        { "lunarvim/colorschemes" }, -- LunarVim’s default colorscheme collection
-        { "folke/tokyonight.nvim" },
-        { "catppuccin/nvim",                     name = "catppuccin" },
-        { "EdenEast/nightfox.nvim" },
-        { "shaunsingh/nord.nvim" },
-        { "Mofiqul/vscode.nvim" },
-        { "navarasu/onedark.nvim" },
-        { "rebelot/kanagawa.nvim" },
-        { "chriskempson/vim-tomorrow-theme" },
 
         -- UI
-        { "lukas-reineke/indent-blankline.nvim", main = "ibl",       event = { "BufReadPost", "BufNewFile" } },
+        { "lukas-reineke/indent-blankline.nvim", main = "ibl", event = { "BufReadPost", "BufNewFile" } },
         {
             "akinsho/bufferline.nvim",
             version = "*",
@@ -447,6 +435,20 @@ require("lazy").setup({
                 "echasnovski/mini.nvim",
                 version = "*",
             },
+            -- ==============================================================
+            -- Place all Themes here !
+            -- ==============================================================
+            { "ellisonleao/gruvbox.nvim",        name = "gruvbox-ellison" },
+            { "projekt0n/github-nvim-theme",     name = "github-theme" },
+            { "lunarvim/colorschemes" }, -- LunarVim’s default colorscheme collection
+            { "folke/tokyonight.nvim" },
+            { "catppuccin/nvim",                 name = "catppuccin" },
+            { "EdenEast/nightfox.nvim" },
+            { "shaunsingh/nord.nvim" },
+            { "Mofiqul/vscode.nvim" },
+            { "navarasu/onedark.nvim" },
+            { "rebelot/kanagawa.nvim" },
+            { "chriskempson/vim-tomorrow-theme" },
 
             { "rose-pine/neovim",                name = "rose-pine" },
             { "sainnhe/everforest",              name = "everforest" },
@@ -462,6 +464,11 @@ require("lazy").setup({
             { "luisiacc/gruvbox-baby",           name = "gruvbox-baby" },
             { "ribru17/bamboo.nvim",             name = "bamboo" },
             { "Biscuit-Theme/nvim",              name = "biscuit" },
+
+            -- ==============================================================
+            -- All motion plugins here! :
+            -- ==============================================================
+            { "otavioschwanck/arrow.nvim", }
             -- ==============================================================
             -- Configuration for Lazy nvim Keep Plugins above this Comment !
             -- ==============================================================
