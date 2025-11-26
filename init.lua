@@ -120,10 +120,11 @@ safe_require("user.PluginExtensionConfiguration.overseer")
 -- Colorscheme Calls Only
 -- ============= ============= ============= ============= =============
 
--- Uncomment this to use gruvbox
--- vim.cmd.colorscheme("nordfox")
+-- NOTE: This IDE is built to hardly support gruvbox but other themes do work well
+-- Define colorscheme settings here !
 
 -- Comment this if you don't like
+-- Gruv Box Material only
 vim.g.gruvbox_material_background = "hard"     -- options: soft | medium | hard
 vim.g.gruvbox_material_foreground = "material" -- options: material | mix | original
 vim.g.gruvbox_material_enable_bold = 1
@@ -131,5 +132,20 @@ vim.g.gruvbox_material_enable_italic = 1
 vim.g.gruvbox_material_ui_contrast = "low"        -- options: low | high
 vim.g.gruvbox_material_transparent_background = 0 -- set to 1 for transparent
 
--- Finally, load the colorscheme
-vim.cmd.colorscheme("nordfox")
+
+-- Default nord by shaunsingh
+-- Example config in lua
+vim.g.nord_contrast = true
+vim.g.nord_borders = false
+vim.g.nord_disable_background = false
+vim.g.nord_italic = false
+vim.g.nord_uniform_diff_background = true
+vim.g.nord_bold = false
+
+
+--
+-- ============= ============= ============= ============= =============
+-- Load the colorscheme at last !
+-- NOTE: SGT colorsheme_name will override
+-- ============= ============= ============= ============= =============
+vim.cmd.colorscheme("rose-pine")

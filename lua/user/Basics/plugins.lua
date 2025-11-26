@@ -460,6 +460,8 @@ require("lazy").setup({
             { "AlexvZyl/nordic.nvim",            name = "nordic-Alexy" },
             { "NvChad/nvim-base16.lua" }, -- Define yourself
             { "luisiacc/gruvbox-baby",           name = "gruvbox-baby" },
+            { "ribru17/bamboo.nvim",             name = "bamboo" },
+            { "Biscuit-Theme/nvim",              name = "biscuit" },
             -- ==============================================================
             -- Configuration for Lazy nvim Keep Plugins above this Comment !
             -- ==============================================================
