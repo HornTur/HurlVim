@@ -121,7 +121,7 @@ safe_require("user.PluginExtensionConfiguration.overseer")
 -- ============= ============= ============= ============= =============
 
 -- Uncomment this to use gruvbox
--- vim.cmd.colorscheme("onenord")
+-- vim.cmd.colorscheme("nordfox")
 
 -- Comment this if you don't like
 vim.g.gruvbox_material_background = "hard"     -- options: soft | medium | hard
@@ -132,4 +132,4 @@ vim.g.gruvbox_material_ui_contrast = "low"        -- options: low | high
 vim.g.gruvbox_material_transparent_background = 0 -- set to 1 for transparent
 
 -- Finally, load the colorscheme
-vim.cmd.colorscheme("onenord")
+vim.cmd.colorscheme("nordfox")
