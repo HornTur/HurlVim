@@ -18,482 +18,165 @@ vim.opt.rtp:prepend(lazypath)
 -- =====================
 require("lazy").setup({
     spec = {
-        -- core
-        { "nvim-lua/plenary.nvim",               lazy = true },
-        { "nvim-tree/nvim-web-devicons",         lazy = true },
 
+        -- ===========================
+        -- Plugin Managers
+        -- ===========================
+        { "mason-org/mason.nvim",           opts = {} },
+        { "williamboman/mason.nvim",        build = ":MasonUpdate",           event = "VeryLazy", },
 
-        -- UI
-        { "lukas-reineke/indent-blankline.nvim", main = "ibl", event = { "BufReadPost", "BufNewFile" } },
+        -- ===========================
+        -- dependencies
+        -- ===========================
+        { "nvim-lua/plenary.nvim",          "nvim-treesitter/nvim-treesitter" },
+        { "MunifTanjim/nui.nvim" },
+        { "theHamsta/nvim-dap-virtual-text" },
+        { "rafamadriz/friendly-snippets" },
+        { "stevearc/overseer.nvim" },
         {
-            "akinsho/bufferline.nvim",
-            version = "*",
-            dependencies = "nvim-tree/nvim-web-devicons",
-            event = "VeryLazy",
-            config = function()
-            end,
-        },
-        {
-            "nvim-tree/nvim-tree.lua",
-            version = "*",
-            dependencies = { "nvim-tree/nvim-web-devicons" },
-        },
-
-        --completion
-        {
-            "hrsh7th/nvim-cmp",
-            dependencies = {
-                "hrsh7th/cmp-nvim-lsp",
-                "hrsh7th/cmp-buffer",
-                "hrsh7th/cmp-path",
-                "L3MON4D3/LuaSnip",
-                "saadparwaiz1/cmp_luasnip",
-                'hrsh7th/cmp-cmdline',
-            },
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path",
+            "L3MON4D3/LuaSnip",
+            "saadparwaiz1/cmp_luasnip",
+            'hrsh7th/cmp-cmdline',
         },
 
-        -- autopairs
-        { "windwp/nvim-autopairs",     event = "InsertEnter" },
-        { "kylechui/nvim-surround",    event = "VeryLazy",                              config = true },
-        -- Your Plugins here
-
-
-        { "stevearc/conform.nvim",     event = "BufWritePre" },
-
-        -- ===== Statusline
-        { "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons" } },
-
-        -- ===== Dap + UI
+        { "nvim-lua/plenary.nvim",       lazy = true },
+        { "nvim-tree/nvim-web-devicons", lazy = true },
+        { "hrsh7th/cmp-nvim-lsp" },
+        { "hrsh7th/cmp-buffer" },
+        { "hrsh7th/cmp-path" },
+        { "L3MON4D3/LuaSnip" },
+        { "saadparwaiz1/cmp_luasnip" },
+        { 'hrsh7th/cmp-cmdline' },
         { "mfussenegger/nvim-dap" },
-        { "rcarriga/nvim-dap-ui",      dependencies = { "mfussenegger/nvim-dap" } },
-
-        {
-            "williamboman/mason.nvim",
-            build = ":MasonUpdate", -- optional: auto-update registry
-            event = "VeryLazy",     -- load only when needed for speed
-            config = function()
-                -- Mason UI setup
-                require("mason").setup({
-                    ui = {
-                        border = "rounded", -- match Lazy.nvim style
-                        width = 0.8,
-                        height = 0.9,
-                        icons = {
-                            package_installed   = "󰄳", -- nf-md-check
-                            package_pending     = "󰌠", -- nf-md-timer_sand
-                            package_uninstalled = "󰅙", -- nf-md-close_circle
-                        },
-                        keymaps = {
-                            toggle_package_expand   = "<CR>",
-                            install_package         = "i",
-                            update_package          = "u",
-                            check_package_version   = "c",
-                            update_all_packages     = "U",
-                            check_outdated_packages = "C",
-                            uninstall_package       = "x",
-                            cancel_installation     = "<C-c>",
-                        },
-                    },
-                })
-
-                -- Optional: match Mason highlight groups with active colorscheme dynamically
-                local function set_mason_highlights()
-                    local normal = vim.api.nvim_get_hl(0, { name = "Normal" })
-                    local accent = vim.api.nvim_get_hl(0, { name = "String" })
-                    local title  = vim.api.nvim_get_hl(0, { name = "Title" })
-                    local fg     = accent.fg or "#89b4fa"
-                    local bg     = normal.bg or "#1e1e2e"
-
-                    vim.api.nvim_set_hl(0, "MasonHeader", { fg = bg, bg = fg, bold = true })
-                    vim.api.nvim_set_hl(0, "MasonHeaderSecondary", { fg = fg, bg = bg, bold = true })
-                    vim.api.nvim_set_hl(0, "MasonHighlight", { fg = fg })
-                    vim.api.nvim_set_hl(0, "MasonHighlightBlock", { fg = bg, bg = fg, bold = true })
-                    vim.api.nvim_set_hl(0, "MasonHighlightBlockBold", { fg = bg, bg = fg, bold = true })
-                    vim.api.nvim_set_hl(0, "MasonNormal", { fg = accent.fg or "#cdd6f4", bg = bg })
-                end
-
-                -- Run immediately and whenever the theme changes
-                set_mason_highlights()
-                vim.api.nvim_create_autocmd("ColorScheme", { callback = set_mason_highlights })
-            end,
-        },
-        {
-            "mason-org/mason.nvim",
-            opts = {}
-        },
         { "nvim-neotest/nvim-nio" }, -- dependency
+        { "nvim-lua/plenary.nvim" },
+        { "nvim-lua/plenary.nvim",       "nvim-treesitter/nvim-treesitter" },
+        { "hrsh7th/cmp-nvim-lsp" },
+        { "honza/vim-snippets",          lazy = true },
+        { "MunifTanjim/nui.nvim" },
 
-        -- ==== Sessions & workspace
+        {
+            "nvim-lua/plenary.nvim",
+            "nvim-tree/nvim-web-devicons",
+
+            { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+            { "nvim-telescope/telescope-fzy-native.nvim" },
+            "nvim-telescope/telescope-file-browser.nvim",
+            "nvim-telescope/telescope-project.nvim",
+            "jvgrootveld/telescope-zoxide",
+            "debugloop/telescope-undo.nvim",
+            "nvim-telescope/telescope-ui-select.nvim",
+        },
+
+
+        -- ===========================
+        -- UI
+        -- ===========================
+        --        { "folke/snacks.nvim",                   version = "*", lazy = false, },
+        --        { "folke/noice.nvim" },
+        { "echasnovski/mini.icons",              version = false,                        lazy = true, },
+        { "stevearc/dressing.nvim" },
+        { "beauwilliams/focus.nvim" },
+        { "rcarriga/nvim-notify" },
+        { "nvim-treesitter/nvim-treesitter",     build = ":TSUpdate" },
+        { "lukas-reineke/indent-blankline.nvim", main = "ibl",                           event = { "BufReadPost", "BufNewFile" } },
+        { "akinsho/bufferline.nvim",             version = "*",                          event = "VeryLazy", },
+        { "nvim-tree/nvim-tree.lua",             version = "*", },
+        { "hrsh7th/nvim-cmp" },
+        { "windwp/nvim-autopairs",               event = "InsertEnter" },
+        { "kylechui/nvim-surround",              event = "VeryLazy",                     config = true },
+        { "stevearc/conform.nvim",               event = "BufWritePre" },
+        { "nvim-lualine/lualine.nvim" },
+        { "mfussenegger/nvim-dap" },
+        { "rcarriga/nvim-dap-ui" },
+        { "goolord/alpha-nvim",                  event = "VimEnter", },
+        { "MaximilianLloyd/ascii.nvim" },
+
+
+        -- =========================
+        -- Lsp Only
+        -- =========================
+        { "neovim/nvim-lspconfig",               event = { "BufReadPre", "BufNewFile" }, },
+        { "L3MON4D3/LuaSnip",                    lazy = true },
+        { "akinsho/toggleterm.nvim",             version = "*" },
+        { "folke/trouble.nvim",                  branch = "main", },
+        { "folke/todo-comments.nvim" },
+        { "ThePrimeagen/refactoring.nvim" },
+        { "mfussenegger/nvim-dap" },
+        { "onsails/lspkind-nvim" },
+        { "SmiteshP/nvim-navic",                 lazy = true },
+        { "L3MON4D3/LuaSnip",                    version = "v2.*",                       build = "make install_jsregexp" },
+        { "saghen/blink.cmp",                    version = "*" },
+
+        -- =========================
+        -- Sessions & workspace
+        -- =========================
+        { "stevearc/resession.nvim" },
         { "rmagatti/auto-session" },
         { "natecraddock/workspaces.nvim" },
-
-        -- ====== Notify
-        { "rcarriga/nvim-notify" },
-
-        -- Dashboard (startup screen)
-        -- { "nvimdev/dashboard-nvim", event = "VimEnter" },
-        -- alpha.nvim (dashboard)
-        {
-            "goolord/alpha-nvim",
-            event = "VimEnter",
-            dependencies = { "nvim-tree/nvim-web-devicons" },
-            config = function()
-            end,
-        },
-        -- Project.nvim (detect project roots)
         { "ahmedkhalf/project.nvim" },
 
-        -- Trouble.nvim (diagnostics / references UI)
+        -- =========================
+        -- Daily usefull
+        -- =========================
+        { "folke/which-key.nvim",                event = "VeryLazy", },
+        { "karb94/neoscroll.nvim",               config = true },
+        { "mg979/vim-visual-multi",              branch = "master" },
+        { 'numToStr/Comment.nvim' },
+        { "kdheepak/lazygit.nvim" },
+        { "echasnovski/mini.nvim",               version = "*" },
+        { "nvzone/showkeys" },
+
+        -- =========================
+        -- File Search
+        -- =========================
+        { "ThePrimeagen/harpoon",                branch = "harpoon2" },
+        { "nvim-telescope/telescope.nvim",       tag = "0.1.5" },
+        { "nvim-neo-tree/neo-tree.nvim",         branch = "v3.x" },
+        { "leath-dub/snipe.nvim" },
+        { "otavioschwanck/arrow.nvim", },
         {
-            "folke/trouble.nvim",
-            branch = "main",
-            dependencies = { "nvim-tree/nvim-web-devicons" },
-            opts = {
-                -- Use the defaults for simplicity
-                modes = {
-                    diagnostics = {
-                        desc = "Diagnostics (all workspace)",
-                    },
-                    diagnostics_buffer = {
-                        desc = "Diagnostics (current buffer)",
-                    },
-                    symbols = { desc = "Document Symbols" },
-                    quickfix = { desc = "QuickFix List" },
-                    lsp = { desc = "LSP References / Definitions" },
-                },
-            },
-        },
-        -- ~/.config/nvim/lua/user/Basics/plugins.lu
-        {
-            "echasnovski/mini.icons",
-            version = false, -- always use latest
-            lazy = true,
-            config = function()
-                require("mini.icons").setup()
-            end,
-        },
-
-        -- Harpoon (quick file navigation)
-        {
-            "ThePrimeagen/harpoon",
-            branch = "harpoon2",
-            dependencies = { "nvim-lua/plenary.nvim" },
-        },
-
-        -- Refactoring
-        {
-            "ThePrimeagen/refactoring.nvim",
-            dependencies = { "nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter" },
-        },
-
-        -- Todo Comments
-        { "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
-
-        -- Neoscroll (smooth scrolling)
-        { "karb94/neoscroll.nvim",    config = true },
-
-
-
-        -- =====================
-        -- Telescope + Extensions
-        -- =====================
-        {
-            "nvim-telescope/telescope.nvim",
-            tag = "0.1.5",
-            dependencies = {
-                "nvim-lua/plenary.nvim",
-                "nvim-tree/nvim-web-devicons",
-
-                -- 🔹 Performance
-                { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-                { "nvim-telescope/telescope-fzy-native.nvim" },
-                -- 🔹 Extra pickers
-                "nvim-telescope/telescope-file-browser.nvim",
-                "nvim-telescope/telescope-project.nvim",
-                "jvgrootveld/telescope-zoxide",
-                "debugloop/telescope-undo.nvim",
-
-                -- 🔹 UI
-                "nvim-telescope/telescope-ui-select.nvim",
-            },
-        },
-
-
-
-
-        -- treesitter
-        { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
-
-        -- LSP config
-        {
-            "neovim/nvim-lspconfig",
-            event = { "BufReadPre", "BufNewFile" },
-            dependencies = { "hrsh7th/cmp-nvim-lsp" },
-            config = function()
-                local on_attach = function(client, bufnr)
-                    if client.server_capabilities.documentSymbolProvider then
-                        require("nvim-navic").attach(client, bufnr)
-                    end
-                end
-            end
-        },
-
-        -- snippets
-        { "L3MON4D3/LuaSnip",                lazy = true },
-        { "honza/vim-snippets",              lazy = true },
-
-        -- terminal
-        { "akinsho/toggleterm.nvim",         version = "*" },
-
-        -- ====================
-        --  Add More From here
-        -- ====================
-        -- Command Cheat Code with Dependency which-key.nvim
-        {
-            "folke/which-key.nvim",
-            event = "VeryLazy",
-            config = function()
-                require("which-key").setup()
-            end,
-        },
-
-        --Better UI
-        {
-            "folke/snacks.nvim",
-            -- version = "v2.22.0",
-            version = "*",
-            priority = 2000,
+            'stevearc/oil.nvim',
+            ---@module 'oil'
+            ---@type oil.SetupOpts
+            opts = {},
+            -- Optional dependencies
+            dependencies = { { "nvim-mini/mini.icons", opts = {} } },
             lazy = false,
         },
-        ---Dap UI dependencies
-        -- in your plugins.lua
-        {
-            "mfussenegger/nvim-dap",
-            dependencies = {
-                "rcarriga/nvim-dap-ui",
-                "theHamsta/nvim-dap-virtual-text", -- <--- add this
-            },
-            config = function()
-                require("user.UI.DAP_UI") -- or your dap config
-            end,
-        },
-        -- =====================
-        -- Better UI plugins (organized)
-        -- =====================
-        {
-            -- Better vim.ui.select / vim.ui.input
-            { "stevearc/dressing.nvim" },
+        -- =========================
+        -- Colorscheme
+        -- =========================
+        { "ellisonleao/gruvbox.nvim",        name = "gruvbox-ellison" },
+        { "projekt0n/github-nvim-theme",     name = "github-theme" },
+        { "lunarvim/colorschemes" }, -- LunarVim’s default colorscheme collection
+        { "folke/tokyonight.nvim" },
+        { "catppuccin/nvim",                 name = "catppuccin" },
+        { "EdenEast/nightfox.nvim" },
+        { "shaunsingh/nord.nvim" },
+        { "Mofiqul/vscode.nvim" },
+        { "navarasu/onedark.nvim" },
+        { "rebelot/kanagawa.nvim" },
+        { "chriskempson/vim-tomorrow-theme" },
+        { "rose-pine/neovim",                name = "rose-pine" },
+        { "sainnhe/everforest",              name = "everforest" },
+        { "sainnhe/gruvbox-material",        name = "gruvbox-material-sainnhe" },
+        { "sainnhe/sonokai",                 name = "sonokai-sainnhe" },
+        { "tiagovla/tokyodark.nvim",         name = "tokyodark-tiagovla" },
+        { "savq/melange-nvim",               name = "melange-warm-savq" },
+        { "rmehri01/onenord.nvim",           name = "onenord-rmehri01" },
+        { "olivercederborg/poimandres.nvim", name = "poimanders.nvim" },
+        { "AlexvZyl/nordic.nvim",            name = "nordic-Alexy" },
+        { "NvChad/nvim-base16.lua" }, -- Define yourself
+        { "luisiacc/gruvbox-baby",           name = "gruvbox-baby" },
+        { "ribru17/bamboo.nvim",             name = "bamboo" },
+        { "Biscuit-Theme/nvim",              name = "biscuit" },
 
-            -- Modern notifications, cmdline, messages
-            {
-                "folke/noice.nvim",
-                dependencies = { "MunifTanjim/nui.nvim" },
-            },
-
-            -- Auto-resize & manage splits (modern replacement for windows.nvim)
-            { "beauwilliams/focus.nvim" },
-
-            -- Fuzzy finder
-            { "nvim-telescope/telescope.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
-
-            -- File explorer
-            {
-                "nvim-neo-tree/neo-tree.nvim",
-                branch = "v3.x",
-                dependencies = { "nvim-lua/plenary.nvim" },
-            },
-
-            -- Quick buffer jump
-            { "leath-dub/snipe.nvim" },
-        },
-
-
-        -- ##################
-        -- Inbuilt here
-        -- ##################
-
-        -- #####################################
-        -- Multicursor Plugin
-        -- You can easily move lines up or down
-        -- Via c-j c-k in normal mode
-        -- #####################################
-
-
-        {
-            "mg979/vim-visual-multi",
-            branch = "master"
-        },
-
-        {
-            "onsails/lspkind-nvim",
-            config = function()
-                require('lspkind').init()
-            end
-        },
-
-        {
-            "rebelot/heirline.nvim",
-            event = "VeryLazy",
-            dependencies = {
-                "nvim-tree/nvim-web-devicons",
-            },
-            config = function()
-                -- Put the full Heirline configuration code here
-                -- (the one I provided earlier)
-            end,
-        },
-
-        {
-            "SmiteshP/nvim-navic",
-            lazy = true,
-            opts = {
-                separator = "  ",
-                highlight = true,
-                depth_limit = 5,
-                icons = {
-                    File = "󰈙 ",
-                    Module = " ",
-                    Namespace = "󰌗 ",
-                    Package = " ",
-                    Class = "󰌗 ",
-                    Method = "󰆧 ",
-                    Property = " ",
-                    Field = " ",
-                    Constructor = " ",
-                    Enum = "󰕘 ",
-                    Interface = "󰕘 ",
-                    Function = "󰊕 ",
-                    Variable = "󰆧 ",
-                    Constant = "󰏿 ",
-                    String = "󰀬 ",
-                    Number = "󰎠 ",
-                    Boolean = "◩ ",
-                    Array = "󰅪 ",
-                    Object = "󰅩 ",
-                    Key = "󰌋 ",
-                    Null = "󰟢 ",
-                    EnumMember = " ",
-                    Struct = "󰌗 ",
-                    Event = " ",
-                    Operator = "󰆕 ",
-                    TypeParameter = "󰊄 ",
-                },
-            },
-        },
-
-        {
-            "MaximilianLloyd/ascii.nvim",
-            dependencies = { "MunifTanjim/nui.nvim" },
-            config = function()
-                require("ascii").setup({
-                    -- optional configs like color, alignment, animation speed
-                })
-            end
-        },
-
-        {
-            "L3MON4D3/LuaSnip",
-            version = "v2.*",
-            build = "make install_jsregexp",
-            dependencies = {
-                "rafamadriz/friendly-snippets", -- Optional: pre-made snippets
-            },
-            {
-                'numToStr/Comment.nvim',
-                config = function()
-                    require('Comment').setup()
-                end,
-            },
-            {
-                "kdheepak/lazygit.nvim",
-                dependencies = {
-                    "nvim-lua/plenary.nvim",
-                },
-                config = function()
-                    -- Set keybinding
-                    vim.keymap.set("n", "<leader>gg", "<cmd>LazyGit<cr>", { desc = "LazyGit" })
-                end,
-            },
-
-            { "nvzone/showkeys" },
-            { "stevearc/resession.nvim" },
-            { "stevearc/overseer.nvim" },
-
-            {
-                'stevearc/oil.nvim',
-                ---@module 'oil'
-                ---@type oil.SetupOpts
-                opts = {},
-                -- Optional dependencies
-                dependencies = { { "nvim-mini/mini.icons", opts = {} } },
-                -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
-                -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
-                lazy = false,
-            },
-
-            {
-                "echasnovski/mini.nvim",
-                version = "*",
-            },
-            -- ==============================================================
-            -- Place all Themes here !
-            -- ==============================================================
-            { "ellisonleao/gruvbox.nvim",        name = "gruvbox-ellison" },
-            { "projekt0n/github-nvim-theme",     name = "github-theme" },
-            { "lunarvim/colorschemes" }, -- LunarVim’s default colorscheme collection
-            { "folke/tokyonight.nvim" },
-            { "catppuccin/nvim",                 name = "catppuccin" },
-            { "EdenEast/nightfox.nvim" },
-            { "shaunsingh/nord.nvim" },
-            { "Mofiqul/vscode.nvim" },
-            { "navarasu/onedark.nvim" },
-            { "rebelot/kanagawa.nvim" },
-            { "chriskempson/vim-tomorrow-theme" },
-
-            { "rose-pine/neovim",                name = "rose-pine" },
-            { "sainnhe/everforest",              name = "everforest" },
-            { "sainnhe/gruvbox-material",        name = "gruvbox-material-sainnhe" },
-            { "sainnhe/sonokai",                 name = "sonokai-sainnhe" },
-            { "tiagovla/tokyodark.nvim",         name = "tokyodark-tiagovla" },
-            { "savq/melange-nvim",               name = "melange-warm-savq" },
-            { "rmehri01/onenord.nvim",           name = "onenord-rmehri01" },
-            { "olivercederborg/poimandres.nvim", name = "poimanders.nvim" },
-
-            { "AlexvZyl/nordic.nvim",            name = "nordic-Alexy" },
-            { "NvChad/nvim-base16.lua" }, -- Define yourself
-            { "luisiacc/gruvbox-baby",           name = "gruvbox-baby" },
-            { "ribru17/bamboo.nvim",             name = "bamboo" },
-            { "Biscuit-Theme/nvim",              name = "biscuit" },
-
-            -- ==============================================================
-            -- All motion plugins here! :
-            -- ==============================================================
-            { "otavioschwanck/arrow.nvim", },
-
-            -- ==============================================================
-            -- Lsp Plugins only ! :
-            -- ==============================================================
-            {
-                "saghen/blink.cmp",
-                version = "*", -- or omit to track latest
-                dependencies = {
-                    "L3MON4D3/LuaSnip",
-                    "rafamadriz/friendly-snippets",
-                },
-            },
-            -- ==============================================================
-            -- Configuration for Lazy nvim Keep Plugins above this Comment !
-            -- ==============================================================
-        }, -- NOTE: Closing brace for spec table!!!!!!
-
-
-        -- ==============================================================
-        -- WARN: Look at the NOTE and stay behind it !
-        -- ==============================================================
-
-
-
-    },
+        -- NOTE: STAY BEHIND THIS !
+    },               -- NOTE: Closing brace for spec table!!!!!!
 
     concurrency = 5, -- ONLY 5 plugins download at once
     -- Adjust: 3=slow, 5=balanced, 10=fast, 20=very fast

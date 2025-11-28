@@ -89,28 +89,50 @@ rm -rf ~/.local/share/Codeotus/
 ##  Featured Plugins
 
 ### Core Features
-Plugin Managers = Lazy.nvim (main) & Mason (Secondary)
-File Navigation = oil.nvim telescope.nvim harpoon.nvim arrow.nvim snipe.nvim nvim-tree.nvim 
-Lsp = nvim-lspconfig
-Autocompletion Engines = nvim-cmp.nvim & blink-cmp.lua
-Treesitters = nvim-treesitter (download with :TSInstall language_name)
-DAP = nvim-dap & nvim-dap-ui (Under maintainance)
-Git = lazygit.nvim 
-Statusline = lualine 
-Bufferline = bufferline.nvim
-Notification = Mostly mini.notify + nvim-notify && use snacks.nvim as backend if mini fails.
-Surround = surround.nvim 
-Comment = comment.nvim
-Terminal = toggleterm.nvim
-Session = resession.nvim 
-IBL = indent-blankline.nvim 
-Diagonastics = trouble.nvim
-Autopairs = nvim-autopairs
-Formatting = conform.nvim
-Keybindings = which-key.nvim
-Scrolling = neoscroll.nvim 
-Snippets = LuaSnip + Per extension Json based snippet support
-Dashboard = Ascii + Dashboard plugin
+Plugin Managers = Lazy.nvim (main) & Mason (Secondary) <br>
+
+File Navigation = oil.nvim telescope.nvim harpoon.nvim arrow.nvim snipe.nvim nvim-tree.nvim  <br>
+
+Lsp = nvim-lspconfig <br>
+
+Autocompletion Engines = nvim-cmp.nvim & blink-cmp.lua <br>
+
+Treesitters = nvim-treesitter (download with :TSInstall language_name) <br>
+
+DAP = nvim-dap & nvim-dap-ui (Under maintainance)<br>
+
+Git = lazygit.nvim<br>
+ 
+Statusline = lualine<br>
+ 
+Bufferline = bufferline.nvim<br>
+
+Notification = Mostly mini.notify + nvim-notify && use snacks.nvim as backend if mini fails.<br>
+
+Surround = surround.nvim <br>
+
+Comment = comment.nvim<br>
+
+Terminal = toggleterm.nvim<br>
+
+Session = resession.nvim <br>
+
+IBL = indent-blankline.nvim <br>
+
+Diagonastics = trouble.nvim<br>
+
+Autopairs = nvim-autopairs<br>
+
+Formatting = conform.nvim<br>
+
+Keybindings = which-key.nvim<br>
+
+Scrolling = neoscroll.nvim <br>
+
+Snippets = LuaSnip + Per extension Json based snippet support<br>
+
+Dashboard = Ascii + Dashboard plugin<br>
+
 
 ### Popular Themes Included
 Choose from 85 themes including:

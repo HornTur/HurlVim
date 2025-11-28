@@ -28,6 +28,7 @@ safe_require("user.Basics.mappings")
 safe_require("user.Basics.autoreload")
 safe_require("user.Basics.plugins")
 safe_require("user.Basics.utilities")
+safe_require("user.Basics.mason")
 
 -- ============= ============= ============= =============
 --  2. UI CORE (Overridden)
@@ -51,12 +52,14 @@ safe_require("user.UI.theme")
 safe_require("user.UI.colors")
 safe_require("user.UI.SetGlobalTheme")
 safe_require("user.UI.notify")
+safe_require("user.UI.ascii")
 
 -- ============= ============= ============= =============
 -- 6. Mini Ecosystem
 -- ============= ============= ============= =============
 safe_require("user.Mini.mini_surround")
 safe_require("user.Mini.mini_notify")
+safe_require("user.Mini.mini_icons")
 
 
 -- ============= ============= ============= =============
@@ -87,9 +90,13 @@ safe_require("user.config.IdeBatch.treesitter")
 safe_require("user.config.IdeBatch.showkey")
 safe_require("user.config.IdeBatch.surround")
 safe_require("user.config.IdeBatch.arrow")
+safe_require("user.config.IdeBatch.comments")
+safe_require("user.config.IdeBatch.lazygit")
 
 safe_require("user.config.IdeBatch.oil")
 safe_require("user.config.LspBatch.luasnip")
+safe_require("user.config.LspBatch.lspkind")
+safe_require("user.config.LspBatch.navic")
 
 -- ============= ============= ============= =============
 -- 4. PluginExtensionConfiguration
