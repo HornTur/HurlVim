@@ -222,13 +222,20 @@ cmp.setup.cmdline({ '/', '?' }, {
         ['<CR>'] = { c = cmp.mapping.confirm({ select = false }) },
     }),
     sources = {
-        { name = 'buffer', max_item_count = 5 }
+        { name = 'buffer', max_item_count = 200 }
     },
     view = {
         entries = { name = 'custom' }
     },
+    window = {
+        completion = {
+            border = 'rounded',
+            scrollbar = true,
+            max_height = 5,
+        },
+    },
     performance = {
-        max_view_entries = 5,
+        max_view_entries = 200,
     },
 })
 
@@ -242,15 +249,22 @@ cmp.setup.cmdline(':', {
         ['<CR>'] = { c = cmp.mapping.confirm({ select = false }) },
     }),
     sources = cmp.config.sources({
-        { name = 'path', max_item_count = 5 }
+        { name = 'path', max_item_count = 200 }
     }, {
-        { name = 'cmdline', max_item_count = 5 }
+        { name = 'cmdline', max_item_count = 200 }
     }),
     view = {
         entries = { name = 'custom' }
     },
+    window = {
+        completion = {
+            border = 'rounded',
+            scrollbar = true,
+            max_height = 5,
+        },
+    },
     performance = {
-        max_view_entries = 5,
+        max_view_entries = 200,
     },
 })
 
