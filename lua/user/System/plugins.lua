@@ -23,12 +23,12 @@ require("lazy").setup({
         -- Plugin Managers
         -- ===========================
         { "mason-org/mason.nvim",           opts = {} },
-        { "williamboman/mason.nvim",        build = ":MasonUpdate",           event = "VeryLazy", },
+        { "williamboman/mason.nvim",        build = ":MasonUpdate", event = "VeryLazy", },
 
         -- ===========================
         -- dependencies
         -- ===========================
-        { "nvim-lua/plenary.nvim",          "nvim-treesitter/nvim-treesitter" },
+        { "nvim-lua/plenary.nvim" },
         { "MunifTanjim/nui.nvim" },
         { "theHamsta/nvim-dap-virtual-text" },
         { "rafamadriz/friendly-snippets" },
@@ -53,7 +53,6 @@ require("lazy").setup({
         { "mfussenegger/nvim-dap" },
         { "nvim-neotest/nvim-nio" }, -- dependency
         { "nvim-lua/plenary.nvim" },
-        { "nvim-lua/plenary.nvim",       "nvim-treesitter/nvim-treesitter" },
         { "hrsh7th/cmp-nvim-lsp" },
         { "honza/vim-snippets",          lazy = true },
         { "MunifTanjim/nui.nvim" },
@@ -81,7 +80,7 @@ require("lazy").setup({
         { "stevearc/dressing.nvim",              version = "v3.1.1", },
         { "beauwilliams/focus.nvim",             version = "v1.0.2", },
         { "rcarriga/nvim-notify",                version = "v3.15.0", },
-        { "nvim-treesitter/nvim-treesitter",     build = ":TSUpdate",                    version = "v0.10.0", },
+        { "nvim-treesitter/nvim-treesitter",     build = ":TSUpdate",                    branch = "main",                         version = "v0.10.0", },
         { "lukas-reineke/indent-blankline.nvim", main = "ibl",                           event = { "BufReadPost", "BufNewFile" }, version = "v3.9.0", },
         { "akinsho/bufferline.nvim",             version = "v4.9.1",                     event = "VeryLazy", },
         { "nvim-tree/nvim-tree.lua",             version = "v1.14.0", },
@@ -150,7 +149,7 @@ require("lazy").setup({
         -- =========================
         -- Colorscheme
         -- =========================
-        { "ellisonleao/gruvbox.nvim",        name = "gruvbox-ellison",         lazy = false, },
+        { "ellisonleao/gruvbox.nvim",        name = "gruvbox-ellison" },
         { "projekt0n/github-nvim-theme",     name = "github-theme" },
         { "lunarvim/colorschemes" }, -- LunarVim’s default colorscheme collection
         { "folke/tokyonight.nvim" },
@@ -175,7 +174,7 @@ require("lazy").setup({
         { "ribru17/bamboo.nvim",             name = "bamboo" },
         { "Biscuit-Theme/nvim",              name = "biscuit" },
         { "olimorris/onedarkpro.nvim",       priority = 1000, },
-
+        -- { "morhetz/gruvbox",                 name = "gruvbox-mohertz" },
 
         -- NOTE: STAY BEHIND THIS !
     },               -- NOTE: Closing brace for spec table!!!!!!

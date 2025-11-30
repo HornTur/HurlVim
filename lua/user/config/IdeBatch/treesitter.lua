@@ -1,173 +1,265 @@
+-- ============================================================================
+-- Nvim-treesitter Configuration for 'main' branch
+-- Installation: { "nvim-treesitter/nvim-treesitter", branch = 'main', build = ":TSUpdate" }
+-- ============================================================================
+
 require('nvim-treesitter.configs').setup({
-  -- Install essential parsers
---  ensure_installed = {
---    "lua", "python", "vim", "vimdoc", "query",
---    "c", "cpp", "rust", "go", "javascript", "typescript",
---    "html", "css", "json", "yaml", "toml", "markdown"
---  },
+    -- ============================================================================
+    -- PARSER INSTALLATION MANAGEMENT
+    -- ============================================================================
 
-    ensure_installed = {},
+    -- List of parser names, or "all" (parsers listed here MUST always be installed)
+    ensure_installed = {
+        "c", "lua", "vim", "vimdoc", "query",
+        "markdown", "markdown_inline",
+        "python", "javascript", "typescript", "tsx",
+        "rust", "go", "bash", "json", "yaml", "toml",
+        "html", "css", "regex"
+    },
 
-  -- Install parsers synchronously
-  sync_install = false,
+    -- Install parsers synchronously (only applied to `ensure_installed`)
+    sync_install = false,
 
-  -- Auto-install missing parsers
-  auto_install = false,
+    -- Automatically install missing parsers when entering buffer
+    auto_install = true,
 
-  -- Required fields
-  modules = {},
-  ignore_install = { "csv" },
+    -- List of parsers to ignore installing (or "all")
+    ignore_install = {},
 
-  -- PURE HIGHLIGHTING ONLY
-  highlight = {
-    enable = true,
+    -- Custom parser installation directory (optional)
+    -- parser_install_dir = "/some/path/to/store/parsers",
 
-    -- Disable vim regex highlighting (let treesitter handle it)
-    additional_vim_regex_highlighting = false,
+    -- ============================================================================
+    -- HIGHLIGHTING MODULE
+    -- ============================================================================
 
-    -- Disable for large files (performance)
-    disable = function(lang, buf)
-      local max_filesize = 100 * 1024 -- 100 KB
-      local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
-      if ok and stats and stats.size > max_filesize then
-        return true
-      end
-    end,
-  },
+    highlight = {
+        enable = true,
 
-  -- DISABLE INDENT (we don't want treesitter indenting)
-  indent = {
-    enable = false,
-  },
+        -- Disable for large files
+        disable = function(lang, buf)
+            local max_filesize = 100 * 1024 -- 100 KB
+            local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+            if ok and stats and stats.size > max_filesize then
+                return true
+            end
+        end,
 
-  -- DISABLE INCREMENTAL SELECTION
-  incremental_selection = {
-    enable = false,
-  },
+        -- Keep false to prevent conflicts
+        additional_vim_regex_highlighting = false,
+    },
 
-  -- DISABLE TEXT OBJECTS
-  textobjects = {
-    enable = false,
-  },
+    -- ============================================================================
+    -- INCREMENTAL SELECTION - Smart nvim motions
+    -- ============================================================================
+
+    incremental_selection = {
+        enable = true,
+        keymaps = {
+            init_selection = "gnn",
+            node_incremental = "grn",
+            scope_incremental = "grc",
+            node_decremental = "grm",
+        },
+    },
+
+    -- ============================================================================
+    -- INDENTATION MODULE
+    -- ============================================================================
+
+    indent = {
+        enable = true,
+        disable = {},
+    },
+
+    -- ============================================================================
+    -- TEXT OBJECTS (requires nvim-treesitter-textobjects plugin)
+    -- ============================================================================
+
+    textobjects = {
+        select = {
+            enable = true,
+            lookahead = true,
+            keymaps = {
+                ["af"] = "@function.outer",
+                ["if"] = "@function.inner",
+                ["ac"] = "@class.outer",
+                ["ic"] = "@class.inner",
+                ["ab"] = "@block.outer",
+                ["ib"] = "@block.inner",
+                ["aa"] = "@parameter.outer",
+                ["ia"] = "@parameter.inner",
+            },
+        },
+
+        move = {
+            enable = true,
+            set_jumps = true,
+            goto_next_start = {
+                ["]m"] = "@function.outer",
+                ["]]"] = "@class.outer",
+                ["]a"] = "@parameter.inner",
+            },
+            goto_next_end = {
+                ["]M"] = "@function.outer",
+                ["]["] = "@class.outer",
+                ["]A"] = "@parameter.inner",
+            },
+            goto_previous_start = {
+                ["[m"] = "@function.outer",
+                ["[["] = "@class.outer",
+                ["[a"] = "@parameter.inner",
+            },
+            goto_previous_end = {
+                ["[M"] = "@function.outer",
+                ["[]"] = "@class.outer",
+                ["[A"] = "@parameter.inner",
+            },
+        },
+
+        swap = {
+            enable = true,
+            swap_next = {
+                ["<leader>a"] = "@parameter.inner",
+            },
+            swap_previous = {
+                ["<leader>A"] = "@parameter.inner",
+            },
+        },
+    },
 })
 
--- Remove ALL underlines from Treesitter highlights
-local function remove_all_underlines()
-  local highlights = vim.api.nvim_get_hl(0, {})
+-- ============================================================================
+-- FOLDING SETUP
+-- ============================================================================
 
-  for group_name, _ in pairs(highlights) do
-    -- Process Treesitter groups (@ prefix) and LSP semantic tokens
-    if group_name:match("^@") or group_name:match("^TS") or group_name:match("^@lsp") then
-      local hl = vim.api.nvim_get_hl(0, { name = group_name })
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+vim.opt.foldenable = true
 
-      -- Remove any underline styling
-      if hl.underline or hl.undercurl or hl.underdouble or hl.underdotted or hl.underdashed then
-        hl.underline = nil
-        hl.undercurl = nil
-        hl.underdouble = nil
-        hl.underdotted = nil
-        hl.underdashed = nil
+-- ============================================================================
+-- REMOVE ONLY UNDERLINES AND INDENT GUIDES (KEEP ALL COLORS)
+-- ============================================================================
 
-        vim.api.nvim_set_hl(0, group_name, hl)
-      end
-    end
-  end
-end
+local function remove_visual_clutter()
+    -- Get all treesitter highlight groups
+    local hl_groups = {
+        -- Functions
+        '@function', '@function.call', '@function.builtin', '@function.macro',
+        '@method', '@method.call',
+        -- Variables
+        '@variable', '@variable.builtin', '@variable.parameter', '@variable.member',
+        '@parameter',
+        -- Types
+        '@type', '@type.builtin', '@type.definition',
+        '@property', '@field',
+        -- Keywords and constants
+        '@keyword', '@keyword.function', '@keyword.operator', '@keyword.return',
+        '@constant', '@constant.builtin',
+        -- Strings and numbers
+        '@string', '@string.escape', '@string.special',
+        '@number', '@boolean', '@float',
+        -- Operators and punctuation
+        '@operator', '@punctuation', '@punctuation.bracket', '@punctuation.delimiter',
+        -- Comments
+        '@comment', '@comment.documentation',
+        -- All other common captures
+        '@constructor', '@label', '@namespace', '@attribute',
+    }
 
--- Prevent IBL from being affected by Treesitter
-local function isolate_ibl_from_treesitter()
-  -- Make IBL completely independent
-  local ibl_groups = {
-    'IblIndent',
-    'IblScope',
-    'IblWhitespace',
-    '@ibl.indent.char',
-    '@ibl.scope.char',
-  }
-
-  for _, group in ipairs(ibl_groups) do
-    -- Set with nocombine to prevent treesitter interference
-    vim.api.nvim_set_hl(0, group, {
-      fg = '#3c3836',
-      nocombine = true,
-      default = false -- Override any defaults
-    })
-  end
-end
-
--- Apply fixes on colorscheme change
-vim.api.nvim_create_autocmd("ColorScheme", {
-  pattern = "*",
-  callback = function()
-    vim.defer_fn(function()
-      remove_all_underlines()
-      isolate_ibl_from_treesitter()
-    end, 100)
-  end,
-})
-
--- Apply immediately
-vim.defer_fn(function()
-  remove_all_underlines()
-  isolate_ibl_from_treesitter()
-end, 100)
-
--- Disable LSP semantic token underlines
-vim.api.nvim_create_autocmd("LspAttach", {
-  callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    if client and client.server_capabilities.semanticTokensProvider then
-      -- Remove underlines from semantic tokens
-      local semantic_groups = {
-        '@lsp.type.function',
-        '@lsp.type.method',
-        '@lsp.type.keyword',
-        '@lsp.type.parameter',
-        '@lsp.type.variable',
-        '@lsp.type.property',
-        '@lsp.type.class',
-        '@lsp.type.interface',
-        '@lsp.type.enum',
-        '@lsp.type.decorator',
-      }
-
-      for _, group in ipairs(semantic_groups) do
+    for _, group in ipairs(hl_groups) do
+        -- Get existing highlight definition
         local hl = vim.api.nvim_get_hl(0, { name = group })
-        if hl and (hl.underline or hl.undercurl) then
-          hl.underline = nil
-          hl.undercurl = nil
-          vim.api.nvim_set_hl(0, group, hl)
+
+        -- Only modify if the group exists and has properties
+        if next(hl) ~= nil then
+            -- Keep all existing properties (fg, bg, bold, italic, etc.)
+            -- but explicitly remove underline and undercurl
+            hl.underline = false
+            hl.undercurl = false
+            hl.underdouble = false
+            hl.underdotted = false
+            hl.underdashed = false
+
+            -- Reapply the highlight with underlines removed
+            vim.api.nvim_set_hl(0, group, hl)
         end
-      end
     end
-  end,
+
+    -- Clear indent line highlighting (doesn't affect text colors)
+    vim.api.nvim_set_hl(0, '@indent', {})
+    vim.api.nvim_set_hl(0, '@whitespace', {})
+    vim.api.nvim_set_hl(0, 'IndentBlanklineChar', {})
+    vim.api.nvim_set_hl(0, 'IndentBlanklineSpaceChar', {})
+    vim.api.nvim_set_hl(0, 'IndentBlanklineContextChar', {})
+    vim.api.nvim_set_hl(0, 'IblIndent', {})
+    vim.api.nvim_set_hl(0, 'IblScope', {})
+
+    -- === REMOVE RECTANGULAR SCOPE/CONTEXT BOXES ===
+    -- These create the blue boxes around code blocks
+    vim.api.nvim_set_hl(0, 'TreesitterContext', {})
+    vim.api.nvim_set_hl(0, 'TreesitterContextLineNumber', {})
+    vim.api.nvim_set_hl(0, 'TreesitterContextBottom', {})
+    vim.api.nvim_set_hl(0, 'TreesitterContextSeparator', {})
+
+    -- Clear scope highlights that create rectangular boxes
+    vim.api.nvim_set_hl(0, '@local.scope', {})
+    vim.api.nvim_set_hl(0, '@scope', {})
+
+    -- Clear any cursor column/line highlights that might show blocks
+    vim.api.nvim_set_hl(0, 'CursorColumn', {})
+    vim.api.nvim_set_hl(0, 'ColorColumn', {})
+
+    -- Clear matchparen and bracket matching highlights
+    vim.api.nvim_set_hl(0, 'MatchParen', { bold = true }) -- Keep bold but no box
+end
+
+-- Apply immediately and on colorscheme changes
+vim.api.nvim_create_autocmd({ 'VimEnter', 'ColorScheme' }, {
+    callback = remove_visual_clutter,
 })
 
--- DISABLE auto-format and auto-indent globally
-vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = "*",
-  callback = function()
-    -- Disable format on save
-    vim.b.autoformat = false
+remove_visual_clutter()
 
-    -- Use simple indent rules (not treesitter)
-    vim.bo.indentexpr = ""
-  end,
+-- Disable nvim-treesitter-context plugin if installed (creates sticky context at top)
+vim.g.treesitter_context_enabled = false
+
+-- Disable LSP semantic tokens that might add underlines (but keep LSP colors)
+vim.api.nvim_create_autocmd('LspAttach', {
+    callback = function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        if client then
+            -- Only disable semantic tokens to prevent underlines
+            -- LSP will still provide diagnostics and other features
+            client.server_capabilities.semanticTokensProvider = nil
+        end
+    end,
 })
 
--- Optional: Enhance Treesitter colors for better visibility
--- Uncomment if you want more vibrant colors
+-- ============================================================================
+-- USEFUL COMMANDS
+-- ============================================================================
+
 --[[
-vim.api.nvim_create_autocmd("ColorScheme", {
-  pattern = "*",
-  callback = function()
-    -- Boost treesitter highlight intensity
-    vim.api.nvim_set_hl(0, '@function', { fg = '#8ec07c', bold = true })
-    vim.api.nvim_set_hl(0, '@keyword', { fg = '#fb4934', bold = true })
-    vim.api.nvim_set_hl(0, '@string', { fg = '#b8bb26' })
-    vim.api.nvim_set_hl(0, '@variable', { fg = '#ebdbb2' })
-    vim.api.nvim_set_hl(0, '@type', { fg = '#fabd2f' })
-    vim.api.nvim_set_hl(0, '@constant', { fg = '#d3869b' })
-  end,
-})
---]]
+Parser Management:
+  :TSInstall <language>        - Install a parser
+  :TSInstallInfo              - Show installation info
+  :TSUpdate [language]        - Update parser(s)
+  :TSUninstall <language>     - Uninstall a parser
+
+Module Control:
+  :TSBufEnable <module>       - Enable module on current buffer
+  :TSBufDisable <module>      - Disable module on current buffer
+  :TSEnable <module> [ft]     - Enable module globally
+  :TSDisable <module> [ft]    - Disable module globally
+  :TSModuleInfo [module]      - Show module state
+
+Diagnostics:
+  :checkhealth nvim-treesitter - Check treesitter health
+
+View Highlights:
+  :Inspect                    - Show highlight groups under cursor
+  :InspectTree                - Show treesitter syntax tree
+]]

@@ -160,4 +160,4 @@ vim.g.gruvbox_material_transparent_background = 0 -- set to 1 for transparent
 -- Load the colorscheme at last !
 -- NOTE: SGT colorsheme_name will override
 -- ============= ============= ============= ============= =============
-vim.cmd.colorscheme("onedarker")
+vim.cmd.colorscheme("gruvbox")

@@ -72,10 +72,10 @@ require("flash").setup({
 })
 
 -- Default jump
-vim.keymap.set({ "n", "x", "o" }, "s", function() require("flash").jump() end, { desc = "Flash" })
+vim.keymap.set({ "n", "x", "o" }, "l", function() require("flash").jump() end, { desc = "Flash" })
 
 -- Treesitter search
-vim.keymap.set({ "n", "x", "o" }, "S", function() require("flash").treesitter() end, { desc = "Flash Treesitter" })
+vim.keymap.set({ "n", "x", "o" }, "T", function() require("flash").treesitter() end, { desc = "Flash Treesitter" })
 
 -- Remote operation (like using flash with `d`, `c`, etc.)
 vim.keymap.set("o", "r", function() require("flash").remote() end, { desc = "Remote Flash" })
