@@ -24,7 +24,6 @@ require("lazy").setup({
         -- ===========================
         { "mason-org/mason.nvim",           opts = {} },
         { "williamboman/mason.nvim",        build = ":MasonUpdate", event = "VeryLazy", },
-
         -- ===========================
         -- dependencies
         -- ===========================

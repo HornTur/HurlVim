@@ -22,7 +22,7 @@ require("conform").setup({
         python = { "black" },
 
         -- Lua
-        lua = { "stylua" },
+        lua = { "prettier" },
 
         -- C/C++
         c = { "clang_format" },
