@@ -1,6 +1,3 @@
--- IMPORTANT: Make sure nvim-notify is NOT loaded or configured!
--- Comment out or remove any require("notify").setup() calls
-
 local mini_notify = require('mini.notify')
 
 mini_notify.setup({
@@ -10,7 +7,7 @@ mini_notify.setup({
     },
 
     lsp_progress = {
-        enable = true,
+        enable = false,
         duration_last = 1000,
     },
 
@@ -18,8 +15,8 @@ mini_notify.setup({
         config = {
             border = "rounded",
             anchor = "NW",
-            row = 1,
-            col = 0,
+            row = vim.o.lines,
+            col = vim.o.columns,
             focusable = false,
             zindex = 100,
             style = "minimal",

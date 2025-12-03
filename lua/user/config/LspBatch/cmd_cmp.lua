@@ -1,149 +1,138 @@
 local cmp = require('cmp')
-
--- Setup nvim-cmp for command line only
+-- 📝 COMMAND-LINE COMPLETION - FIXED ENTER BEHAVIOR
 cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline({
-        ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            else
-                fallback()
-            end
-        end, { 'c' }),
-        ['<S-Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_prev_item()
-            else
-                fallback()
-            end
-        end, { 'c' }),
-        ['<C-n>'] = cmp.mapping.select_next_item(),
-        ['<C-p>'] = cmp.mapping.select_prev_item(),
-        ['<C-e>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({ select = false }),
-    }),
+    mapping = {
+        -- Arrow keys to navigate WITHOUT auto-filling
+        ['<Down>'] = { c = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }) },
+        ['<Up>'] = { c = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }) },
+        ['<C-n>'] = { c = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }) },
+        ['<C-p>'] = { c = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }) },
+
+        -- TAB to fill selected item into cmdline (does NOT execute)
+        ['<Tab>'] = {
+            c = function()
+                if cmp.visible() then
+                    cmp.confirm({
+                        behavior = cmp.ConfirmBehavior.Insert,
+                        select = true
+                    })
+                else
+                    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Tab>', true, true, true), 'n', true)
+                end
+            end,
+        },
+
+        -- ENTER: if item selected, fill it; otherwise execute command immediately
+        ['<CR>'] = {
+            c = function()
+                if cmp.visible() and cmp.get_selected_entry() then
+                    -- Item is selected: insert it into cmdline
+                    cmp.confirm({
+                        behavior = cmp.ConfirmBehavior.Insert,
+                        select = false
+                    })
+                else
+                    -- No item selected or menu closed: execute command
+                    cmp.abort()
+                    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<CR>', true, true, true), 'n', true)
+                end
+            end,
+        },
+
+        -- ESC to close menu WITHOUT filling
+        ['<C-e>'] = { c = cmp.mapping.abort() },
+        ['<Esc>'] = { c = cmp.mapping.abort() },
+    },
     sources = cmp.config.sources({
         { name = 'path' },
-    }, {
-        { name = 'cmdline' },
+        { name = 'cmdline' }
     }),
-    formatting = {
-        format = function(entry, vim_item)
-            vim_item.menu = ({
-                cmdline = '[CMD]',
-                path = '[Path]',
-            })[entry.source.name]
-            return vim_item
-        end,
-    },
     window = {
         completion = {
-            border = 'rounded',
-            winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None',
+            border = "rounded",
+            scrollbar = true,
         },
-    },
-    experimental = {
-        ghost_text = false,
     },
 })
 
--- Setup nvim-cmp for / search
-cmp.setup.cmdline('/', {
-    mapping = cmp.mapping.preset.cmdline({
-        ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            else
-                fallback()
+-- 📝 SEARCH COMPLETION - Same fix
+cmp.setup.cmdline({ '/', '?' }, {
+    mapping = {
+        ['<Down>'] = {
+            c = function()
+                if cmp.visible() then
+                    cmp.select_next_item()
+                else
+                    cmp.complete()
+                end
             end
-        end, { 'c' }),
-        ['<S-Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_prev_item()
-            else
-                fallback()
+        },
+        ['<Up>'] = {
+            c = function()
+                if cmp.visible() then
+                    cmp.select_prev_item()
+                else
+                    cmp.complete()
+                end
             end
-        end, { 'c' }),
-        ['<C-n>'] = cmp.mapping.select_next_item(),
-        ['<C-p>'] = cmp.mapping.select_prev_item(),
-        ['<C-e>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({ select = false }),
-    }),
+        },
+        ['<Tab>'] = {
+            c = function()
+                if cmp.visible() then
+                    cmp.confirm({
+                        behavior = cmp.ConfirmBehavior.Insert,
+                        select = true
+                    })
+                else
+                    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Tab>', true, true, true), 'n', true)
+                end
+            end,
+        },
+        ['<CR>'] = {
+            c = function()
+                if cmp.visible() and cmp.get_selected_entry() then
+                    -- Item is selected: insert it
+                    cmp.confirm({
+                        behavior = cmp.ConfirmBehavior.Insert,
+                        select = false
+                    })
+                else
+                    -- No item selected: execute search
+                    cmp.abort()
+                    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<CR>', true, true, true), 'n', true)
+                end
+            end,
+        },
+        ['<C-e>'] = { c = cmp.mapping.abort() },
+        ['<Esc>'] = { c = cmp.mapping.abort() },
+    },
     sources = {
-        { name = 'buffer' },
-    },
-    formatting = {
-        format = function(entry, vim_item)
-            vim_item.menu = '[Buf]'
-            return vim_item
-        end,
+        { name = 'buffer', keyword_length = 2 }
     },
     window = {
         completion = {
-            border = 'rounded',
-            winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None',
+            border = "rounded",
+            scrollbar = true,
         },
+    },
+    completion = {
+        autocomplete = false,
     },
 })
 
--- Setup nvim-cmp for ? search
-cmp.setup.cmdline('?', {
-    mapping = cmp.mapping.preset.cmdline({
-        ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            else
-                fallback()
-            end
-        end, { 'c' }),
-        ['<S-Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_prev_item()
-            else
-                fallback()
-            end
-        end, { 'c' }),
-        ['<C-n>'] = cmp.mapping.select_next_item(),
-        ['<C-p>'] = cmp.mapping.select_prev_item(),
-        ['<C-e>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({ select = false }),
-    }),
-    sources = {
-        { name = 'buffer' },
-    },
-    formatting = {
-        format = function(entry, vim_item)
-            vim_item.menu = '[Buf]'
-            return vim_item
-        end,
-    },
-    window = {
-        completion = {
-            border = 'rounded',
-            winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None',
-        },
-    },
-})
 
--- =============================================================================
--- ADDITIONAL KEYMAPS & SETTINGS
--- =============================================================================
+-- 🔥 FORCE x Number of ITEMS IN EDITOR & IN CMDLINE
+vim.opt.pumheight = 6   -- Default for insert mode (text editor)
 
--- Toggle documentation with <leader>ud
-vim.keymap.set('n', '<leader>ud', function()
-    local config = require('blink.cmp').config.completion.documentation
-    config.auto_show = not config.auto_show
-    if config.auto_show then
-        vim.notify('Docs: ON', vim.log.levels.INFO)
-    else
-        vim.notify('Docs: OFF', vim.log.levels.INFO)
-    end
-end, { desc = 'Toggle Documentation' })
-
--- Optional: Show which completion engine is active
-vim.api.nvim_create_autocmd('ModeChanged', {
+-- Override for cmdline mode
+vim.api.nvim_create_autocmd("CmdlineEnter", {
     callback = function()
-        local mode = vim.fn.mode()
-        -- You can add visual feedback here if desired
+        vim.opt.pumheight = 6   -- 5 items in command mode
+    end,
+})
+
+vim.api.nvim_create_autocmd("CmdlineLeave", {
+    callback = function()
+        vim.opt.pumheight = 6   -- Back to 4 items in editor
     end,
 })

@@ -24,33 +24,33 @@ local function on_attach(_, bufnr)
     map("n", "<leader>f_", function() vim.lsp.buf.format { async = true } end, opts)
 end
 -- NOTE: Uncomment only when you have to use nvim cmp instead of blink cmp engine.
-local cmp = require("cmp")
-cmp.setup({
-    window = {
-        documentation = cmp.config.disable, -- disables the side floating doc box
-    },
-    mapping = cmp.mapping.preset.insert({
-        ["<CR>"] = cmp.mapping.confirm({ select = true }),
-    }),
-    sources = cmp.config.sources({
-        { name = "nvim_lsp" },
-        { name = "buffer" },
-        { name = "path" },
-    })
-})
+
+-- local cmp = require("cmp")
+-- cmp.setup({
+--     window = {
+--         documentation = cmp.config.disable, -- disables the side floating doc box
+--     },
+--     mapping = cmp.mapping.preset.insert({
+--         ["<CR>"] = cmp.mapping.confirm({ select = true }),
+--     }),
+--     sources = cmp.config.sources({
+--         { name = "nvim_lsp" },
+--         { name = "buffer" },
+--         { name = "path" },
+--     })
+-- })
 -- ===============================
 -- 2. Capabilities (for cmp-nvim-lsp)
 -- ===============================
--- NOTE: For blink-cmp only
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
--- NOTE: For nvim-cmp
-pcall(function()
-    capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-end)
+-- NOTE: For nvim-cmp Uncomment this :
+-- pcall(function()
+--     capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+-- end)
 
--- NOTE: default is blink.cmp
--- capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
+-- NOTE: For blink-cmp Uncomment this :
+capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
 -- ===============================
 -- 3. Default config
 -- ===============================
@@ -64,19 +64,19 @@ local default_config = {
 -- ===============================
 local servers = {
     -- Core
-    bashls        = { cmd = { "bash-language-server", "start" }, filetypes = { "sh", "bash" } },
-    jsonls        = { cmd = { "vscode-json-language-server", "--stdio" }, filetypes = { "json" } },
-    yamlls        = { cmd = { "yaml-language-server", "--stdio" }, filetypes = { "yaml", "yml" } },
-    dockerls      = { cmd = { "docker-langserver", "--stdio" }, filetypes = { "dockerfile" } },
-    marksman      = { cmd = { "marksman", "server" }, filetypes = { "markdown" } },
+    bashls            = { cmd = { "bash-language-server", "start" }, filetypes = { "sh", "bash" } },
+    jsonls            = { cmd = { "vscode-json-language-server", "--stdio" }, filetypes = { "json" } },
+    yamlls            = { cmd = { "yaml-language-server", "--stdio" }, filetypes = { "yaml", "yml" } },
+    dockerls          = { cmd = { "docker-langserver", "--stdio" }, filetypes = { "dockerfile" } },
+    marksman          = { cmd = { "marksman", "server" }, filetypes = { "markdown" } },
 
     -- Web
-    html          = { cmd = { "vscode-html-language-server", "--stdio" }, filetypes = { "html" } },
-    cssls         = { cmd = { "vscode-css-language-server", "--stdio" }, filetypes = { "css", "scss", "less" } },
+    html              = { cmd = { "vscode-html-language-server", "--stdio" }, filetypes = { "html" } },
+    cssls             = { cmd = { "vscode-css-language-server", "--stdio" }, filetypes = { "css", "scss", "less" } },
     --    tsserver      = { cmd = { "typescript-language-server", "--stdio" }, filetypes = { "javascript", "typescript" },},
     --    eslint        = { cmd = { "vscode-eslint-language-server", "--stdio" }, filetypes = { "javascript", }},
     --    biome = { cmd = { "biome", "lsp-proxy" }, filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "json", "jsonc" },},
-    vtsls         = {
+    vtsls             = {
         cmd = { "vtsls", "--stdio" },
         filetypes = {
             "javascript",
@@ -130,13 +130,13 @@ local servers = {
     },
 
     -- System
-    clangd        = { cmd = { "clangd", "--background-index" }, filetypes = { "c", "cpp" } },
-    asm_lsp       = { cmd = { "asm-lsp" }, filetypes = { "asm", "s" } },
-    cmake         = { cmd = { "cmake-language-server" }, filetypes = { "cmake" } },
-    vimls         = { cmd = { "vim-language-server", "--stdio" }, filetypes = { "vim" } },
+    clangd            = { cmd = { "clangd", "--background-index" }, filetypes = { "c", "cpp" } },
+    asm_lsp           = { cmd = { "asm-lsp" }, filetypes = { "asm", "s" } },
+    cmake             = { cmd = { "cmake-language-server" }, filetypes = { "cmake" } },
+    vimls             = { cmd = { "vim-language-server", "--stdio" }, filetypes = { "vim" } },
 
     -- Scripting
-    pyright       = { cmd = { "pyright-langserver", "--stdio" }, filetypes = { "python" } },
+    pyright           = { cmd = { "pyright-langserver", "--stdio" }, filetypes = { "python" } },
 
     --  lua_ls        = {
     --      cmd = { "lua-language-server" },
@@ -156,7 +156,7 @@ local servers = {
     --          },
     --      },
     --  },
-    lua_ls        = {
+    lua_ls            = {
         cmd = { "lua-language-server" },
         filetypes = { "lua" },
         handlers = {
@@ -183,11 +183,35 @@ local servers = {
     },
 
     -- Extra Chad Power
-    rust_analyzer = { cmd = { "rust-analyzer" }, filetypes = { "rust" } },
-    -- gopls         = { cmd = { "gopls" }, filetypes = { "go" } },
+    rust_analyzer     = { cmd = { "rust-analyzer" }, filetypes = { "rust" } },
+
+    ['rust-analyzer'] = {
+        cargo = {
+            allFeatures = true,
+            loadOutDirsFromCheck = true,
+            buildScripts = {
+                enable = true,
+            },
+        },
+        -- Add clippy lints for Rust
+        checkOnSave = {
+            allFeatures = true,
+            command = "clippy",
+            extraArgs = { "--no-deps" },
+        },
+        procMacro = {
+            enable = true,
+            ignored = {
+                ["async-trait"] = { "async_trait" },
+                ["napi-derive"] = { "napi" },
+                ["async-recursion"] = { "async_recursion" },
+            },
+        },
+    },
+
 
     -- Golang Lsp
-    gopls         = {
+    gopls    = {
         cmd = { "gopls" },
         filetypes = { "go", "gomod", "gowork", "gotmpl" },
         settings = {
@@ -235,8 +259,8 @@ local servers = {
             },
         },
     },
-    phpactor      = { cmd = { "phpactor", "language-server" }, filetypes = { "php" } },
-    zls           = { cmd = { "zls" }, filetypes = { "zig" } },
+    phpactor = { cmd = { "phpactor", "language-server" }, filetypes = { "php" } },
+    zls      = { cmd = { "zls" }, filetypes = { "zig" } },
 
     -- ===============================
     -- NOTE: Better to write your configs behind this Note!

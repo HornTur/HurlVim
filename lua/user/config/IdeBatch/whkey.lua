@@ -125,13 +125,12 @@ wk.add({
     -- B/b Group
     -- ===============
     { "<leader>b",    group = "Buffers" },
-    { "<leader>bb",   group = "Buffers" },
-    { "<leader>bbn",  "<Cmd>BufferLineCycleNext<CR>",            desc = "Next Buffer" },
-    { "<leader>bbs",  "<Cmd>w<CR>",                              desc = "Save" },
-    { "<leader>bbc",  "<Cmd>%d<CR>",                             desc = "Clean current buffer data" },
-    { "<leader>bbp",  "<Cmd>BufferLineCyclePrev<CR>",            desc = "Previous Buffer" },
-    { "<leader>bbd",  "<Cmd>bdelete<CR>",                        desc = "Delete Current Buffer" },
-    { "<leader>bbl",  "<Cmd>Telescope buffers<CR>",              desc = "List Buffers (Picker)" },
+    { "<leader>bn",   "<Cmd>BufferLineCycleNext<CR>",            desc = "Next Buffer" },
+    { "<leader>bs",   "<Cmd>w<CR>",                              desc = "Save" },
+    { "<leader>bc",   "<Cmd>%d<CR>",                             desc = "Clean current buffer data" },
+    { "<leader>bp",   "<Cmd>BufferLineCyclePrev<CR>",            desc = "Previous Buffer" },
+    { "<leader>bd",   "<Cmd>bdelete<CR>",                        desc = "Delete Current Buffer" },
+    { "<leader>bl",   "<Cmd>Telescope buffers<CR>",              desc = "List Buffers (Picker)" },
 
 
     -- Commands
